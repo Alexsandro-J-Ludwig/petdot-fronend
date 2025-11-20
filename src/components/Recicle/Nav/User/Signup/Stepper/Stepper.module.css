@@ -1,0 +1,17 @@
+.container-register {
+    background-color: rgb(184, 163, 149);
+    width: 800px;
+    height: 800px;
+    margin: 0 auto;
+    margin-top: 200px;
+    padding: 40px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stepper {
+    margin-top: 20px;
+}
