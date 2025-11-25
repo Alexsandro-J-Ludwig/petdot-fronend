@@ -4,7 +4,7 @@ import styles from "./Signup.module.css";
 import UserService from "../../../../../../services/UserServices";
 
 function Signup() {
-  const [file, setFile] = useState("");
+  const [files, setFiles] = useState("");
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,39 +25,38 @@ function Signup() {
     });
   };
 
-  const handleImage = async () => {
-    const input = document.querySelector<HTMLInputElement>("input[type=file]");
-    if (!input?.files?.length) return;
+    const handleImage = async () => {
+      const input = document.querySelector<HTMLInputElement>("input[type=file]");
+      if (!input?.files?.length) return;
 
-    const file = input.files[0]; // File real
-    const filename = file.name; // só o nome do arquivo
-    const extension = file.type;
-    const MIME_TYPES_PERMITIDOS = [
-      "image/jpeg",
-      "image/png",
-      "image/jpg",
-    ];
-    if(!MIME_TYPES_PERMITIDOS.includes(extension)) {
-      // formato nao permitido
-      alert("formato não permitido")
-      return
-    }
-    // UserService.getURL(MIME_TYPES_PERMITIDOS, filename as string);
-    const urls = await UserService.getURL(extension, filename as string);
-    console.log(urls.uploadURL);
-    
-    UserService.sendImage(urls.uploadURL, file)
-  };
+      const file = input.files[0]; // File real
+      const filename = file.name; // só o nome do arquivo
+      const extension = file.type;
+      const MIME_TYPES_PERMITIDOS = [
+        "image/jpeg",
+        "image/png",
+        "image/jpg",
+      ];
+      if(!MIME_TYPES_PERMITIDOS.includes(extension)) {
+        // formato nao permitido
+        alert("formato não permitido")
+        return
+      }
+      // UserService.getURL(MIME_TYPES_PERMITIDOS, filename as string);
+      const urls = await UserService.getURL(extension, filename as string);
+      
+      UserService.sendImage(urls.uploadURL, files, extension)
+    };
 
   return (
     <div className={styles["container-register"]}>
       <div className={styles["image-container"]}>
-        {file != "" && <img className={styles["image-view"]} src={file}></img>}
+        {files != "" && <img className={styles["image-view"]} src={files}></img>}
         <input
           className={styles["image-input"]}
           type="file"
           onChange={(e) => {
-            setFile(URL.createObjectURL(e.target.files![0]));
+            setFiles(URL.createObjectURL(e.target.files![0]));
           }}
         />
       </div>

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:3000";
+const url = "https://petdot-backend.onrender.com";
 
 class UserService {
   static async registerUser(data: any) {
@@ -59,10 +59,12 @@ class UserService {
     return request.data;
   }
 
-  static async sendImage(imageURL: string, file: any) {
-    const request = await axios.put(`${imageURL}`, {
-      file
-    }, );
+  static async sendImage(imageURL: string, file: any, contentType: string) {
+    const request = await axios.put(`${imageURL}`, file, {
+      headers: {
+        "Content-Type": contentType
+      }
+    });
 
     return request.status
   }
