@@ -1,0 +1,20 @@
+.container-register {
+  background-color: rgb(184, 163, 149);
+  width: 550px;
+  height: 670px;
+  padding: 40px;
+  border-radius: 30px;
+  position: absolute;  /* posição absoluta */
+  top: 50%;            /* empurra pro meio */
+  left: 50%;
+  transform: translate(-50%, -50%);  /* ajusta o centro real */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.493) 10px 10px 50px;
+}
+
+.stepper {
+    margin-top: 20px;
+}

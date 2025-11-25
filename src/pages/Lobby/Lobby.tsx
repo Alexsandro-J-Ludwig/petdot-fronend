@@ -1,12 +1,13 @@
-import Signup from "../../components/Recicle/Nav/User/Signup/Register/Signup";
-import Register from "../../components/Recicle/Nav/User/Signup/Stepper/Sterpper";
+import Login from "../../components/User/Login/Login";
+import Register from "../../components/User/Signup/Stepper/Sterpper";
 
-function Lobby(){
-    return(
-        <>
-           <Register/>
-        </>
-    )
+function Lobby() {
+  return (
+    <>
+      <Register />
+      <Login />
+    </>
+  );
 }
 
 export default Lobby;

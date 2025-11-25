@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "https://petdot-backend.onrender.com";
+const url = "http://localhost:3000";
 
 class UserService {
   static async registerUser(data: any) {
@@ -20,7 +20,7 @@ class UserService {
       }
     );
 
-    return request.data;
+    return request.status;
   }
 
   // static async getURL(extension: string[], filename: string) {
@@ -48,15 +48,16 @@ class UserService {
       `${url}/user/get`,
       {
         email: data.email,
-        pass: data.password,
+        pass: data.pass,
       },
       {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       }
     );
-    return request.data;
+    return request.status;
   }
 
   static async sendImage(imageURL: string, file: any, contentType: string) {
