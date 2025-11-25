@@ -23,31 +23,48 @@ class UserService {
     return request.data;
   }
 
-  static async getURL(extension: string[], filename: string) {
+  // static async getURL(extension: string[], filename: string) {
+  static async getURL(extension: string, filename: string) {
     const request = await axios.post(
       `${url}/user/getURL`,
       {
         filename: filename,
+        contentType: extension,
       },
       {
         withCredentials: true,
         headers: {
-          "Content-Type": extension,
+          // "Content-Type": extension,
+          "Content-Type": "application/json",
         },
       }
     );
-    return request.status;
+    
+    return request.data;
   }
 
-  static async login(data: object) {
-    const request = await axios.post(`${url}/user/get`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+  static async login(data: any) {
+    const request = await axios.post(
+      `${url}/user/get`,
+      {
+        email: data.email,
+        pass: data.password,
       },
-      body: JSON.stringify(data),
-    });
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return request.data;
+  }
+
+  static async sendImage(imageURL: string, file: any) {
+    const request = await axios.put(`${imageURL}`, {
+      file
+    }, );
+
+    return request.status
   }
 }
 

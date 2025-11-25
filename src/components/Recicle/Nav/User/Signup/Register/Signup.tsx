@@ -12,7 +12,7 @@ function Signup() {
   const [phone, setPhone] = useState("");
 
   const handleUser = (
-    name: string,
+    name: string, 
     email: string,
     password: string,
     phone: string
@@ -25,21 +25,28 @@ function Signup() {
     });
   };
 
-  const handleImage = () => {
+  const handleImage = async () => {
     const input = document.querySelector<HTMLInputElement>("input[type=file]");
     if (!input?.files?.length) return;
 
     const file = input.files[0]; // File real
     const filename = file.name; // só o nome do arquivo
-
+    const extension = file.type;
     const MIME_TYPES_PERMITIDOS = [
       "image/jpeg",
       "image/png",
-      "image/webp",
-      "image/gif",
-      "image/svg+xml",
+      "image/jpg",
     ];
-    UserService.getURL(MIME_TYPES_PERMITIDOS, filename as string);
+    if(!MIME_TYPES_PERMITIDOS.includes(extension)) {
+      // formato nao permitido
+      alert("formato não permitido")
+      return
+    }
+    // UserService.getURL(MIME_TYPES_PERMITIDOS, filename as string);
+    const urls = await UserService.getURL(extension, filename as string);
+    console.log(urls.uploadURL);
+    
+    UserService.sendImage(urls.uploadURL, file)
   };
 
   return (
