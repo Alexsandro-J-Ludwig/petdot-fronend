@@ -65,7 +65,11 @@ class UserService {
     const request = await axios.put(
       `${url}/user/update`,
       {
-        data,
+        name: data.name,
+        email: data.email,
+        pass: data.pass,
+        celular: data.celular,
+        nivel_acesso: data.nivel_acesso,
       },
       {
         headers: {
@@ -74,11 +78,13 @@ class UserService {
         },
       }
     );
-
+    
     if (request.data.data != "") {
       localStorage.removeItem("token");
-      localStorage.setItem("token", `Bearer ${request.data.data}`);
+      localStorage.setItem("token", `Bearer ${request.data.data.token}`);
     }
+
+    return request.status;
   }
 
   static async me() {
@@ -88,7 +94,7 @@ class UserService {
         Authorization: localStorage.getItem("token"),
       },
     });
-
+    
     return request;
   }
 }

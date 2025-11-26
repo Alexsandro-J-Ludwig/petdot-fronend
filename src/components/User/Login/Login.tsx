@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Modal } from "@mui/material";
 
 import styles from "./Login.module.css";
-import UserService from "../../../services/UserServices";
+import UserService from "../../../services/Users/UserServices";
 
 function Login() {
   const [open, setOpen] = useState(false);

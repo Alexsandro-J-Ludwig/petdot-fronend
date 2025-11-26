@@ -1,14 +1,17 @@
 import { Menu, MenuItem } from "@mui/material";
 import Hamburger from "hamburger-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./Nav.module.css";
-import UserService from "../../../services/UserServices";
+import UserService from "../../../services/Users/UserServices";
 
 function Nav() {
   const [isOpen, setOpen] = useState(false);
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const [admin, setAdmin] = useState(false);
-  
+
+  useEffect(() => {
+    requestAPI();
+  });
 
   const requestAPI = async () => {
     const response = await UserService.me();
@@ -16,9 +19,13 @@ function Nav() {
     if (response.status !== 200) {
       localStorage.removeItem("token");
       window.location.href = "/";
-    }
+    } else {
+      const acesso = response.data.acesso;
 
-    setAdmin(response.data.data);
+      if (acesso == 2) {
+        setAdmin(true);
+      }
+    }
   };
 
   return (
@@ -44,7 +51,7 @@ function Nav() {
             window.location.href = "/profile";
           }}
         >
-          Profile
+          Pefil
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -54,19 +61,24 @@ function Nav() {
         >
           Área Abrigo
         </MenuItem>
-        {admin && (
+
+        {admin == true && (
           <MenuItem
             onClick={() => {
               setOpen(false);
               window.location.href = "/animal";
             }}
           >
-            Logout
+            Animal
           </MenuItem>
         )}
       </Menu>
 
-      <h1 className={styles["titulo"]}>PetDot</h1>
+      <h1 className={styles["titulo"]}>
+        <a className={styles["link"]} href="/menu">
+          PetDot
+        </a>
+      </h1>
     </div>
   );
 }

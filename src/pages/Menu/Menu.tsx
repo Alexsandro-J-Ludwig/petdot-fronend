@@ -1,21 +1,13 @@
+import { useEffect } from "react";
 import Nav from "../../components/Recicle/Nav/Nav";
-import UserService from "../../services/UserServices";
+import { Validator } from "../../services/Users/Validate";
 import styles from "./Menu.module.css";
-import { useEffect, useState } from "react";
 
 function Menu() {
+
   useEffect(() => {
-    rquestAPI();
+    Validator();
   }, []);
-
-  const rquestAPI = async () => {
-    const response = await UserService.me();
-
-    if (response.status !== 200) {
-      localStorage.removeItem("token");
-      window.location.href = "/";
-    }
-  };
 
   return (
     <>

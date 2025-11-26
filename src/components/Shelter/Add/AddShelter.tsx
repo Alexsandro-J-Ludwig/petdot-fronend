@@ -1,30 +1,67 @@
 import { useState } from "react";
 import styles from "./AddShelter.module.css";
-import { Modal } from "@mui/material";
+import AddressService from "../../../services/AddressService";
+import ShelterService from "../../../services/ShelterService";
+import UserService from "../../../services/Users/UserServices";
 
-function AddShelter() {
+type AddShelterProps = {
+  open: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+};
+
+function AddShelter({ open, onOpen, onClose }: AddShelterProps) {
   const [name, setName] = useState("");
   const [cnpj, setCnpj] = useState("");
+  const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleAddress = async () => {
+    // Lógica para pegar o enderenco do usuário e setar o uuid_address no abrigo
+    const response = await AddressService.getAddress(
+      localStorage.getItem("token") || ""
+    );
 
-  const handleClick = async () => {};
+    if (response.data.uuid) {
+      setAddress(response.data.uuid);
+      handleAddShelter();
+    } else {
+      alert("Erro ao cadastrar endereço");
+    }
+  };
+
+  const handleAddShelter = async () => {
+    const request = await ShelterService.addShelter({
+      name: name,
+      cnpj: cnpj,
+      uuid_address: address,
+      phone: phone,
+      email: email,
+    });
+
+    if (request.status === 201) {
+      alterAccess();
+    } else {
+      alert("Erro ao cadastrar abrigo");
+    }
+  };
+
+  const alterAccess = async () => {
+    const response = await UserService.updateUser({ nivel_acesso: 2 });
+
+    if (response === 200) {
+      alert("Nível de acesso alterado com sucesso!");
+    } else {
+      alert("Erro ao alterar o nível de acesso");
+    }
+  };
 
   return (
     <>
-      <button
-        onClick={() => {
-          handleOpen();
-        }}  
-      >
-        Cadastrar Abrigo
-      </button>
+      <button onClick={onOpen}>Cadastrar Abrigo</button>
 
-      <Modal open={open} onClose={handleClose} aria-labelledby="add-shelter-modal-title">
+      {open && (
         <div>
           <h1 className={styles["title"]}>Adicionar Shelter</h1>
 
@@ -50,10 +87,12 @@ function AddShelter() {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <button className={styles["button"]}>Adicionar</button>
+            <button className={styles["button"]} onClick={handleAddress}>
+              Adicionar
+            </button>
           </div>
         </div>
-      </Modal>
+      )}
     </>
   );
 }

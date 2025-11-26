@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import styles from "./Signup.module.css";
-import UserService from "../../../../services/UserServices";
+import UserService from "../../../../services/Users/UserServices";
 
 type Props = {
   setStepper: React.Dispatch<React.SetStateAction<number>>;
