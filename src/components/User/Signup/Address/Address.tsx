@@ -29,12 +29,14 @@ function Address({ setStepper }: Props) {
 
     if (request == 201) {
       setStepper(2);
+      window.location.href = "/menu";
     }
 
   };
 
   return (
     <div className={styles["container-address"]}>
+
       <input
         placeholder="Endereço"
         className={styles["field"]}

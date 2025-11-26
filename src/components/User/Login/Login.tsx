@@ -19,7 +19,7 @@ function Login() {
     });
 
     if (request == 200) {
-      console.log("login realizado com sucesso");
+      window.location.href = "/menu";
     }
   };
 

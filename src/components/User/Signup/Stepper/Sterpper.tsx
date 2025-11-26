@@ -25,7 +25,8 @@ function Register() {
 
   return (
     <div>
-      <button onClick={handleOpen}>Cadastrar</button>
+      <button onClick={() => { handleOpen(); setStep(0); }}>Cadastrar</button>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -46,6 +47,7 @@ function Register() {
 
           {step > 0 && (
             <button
+              className={styles["button"]}
               onClick={() => {
                 setStep(step - 1);
               }}

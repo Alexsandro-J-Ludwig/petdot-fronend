@@ -16,9 +16,9 @@ class AddressService {
         cep: data.cep,
       },
       {
-        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token")
         },
       }
     );

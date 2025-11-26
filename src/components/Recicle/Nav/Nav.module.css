@@ -1,0 +1,17 @@
+.container-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(199, 129, 64, 0.795);
+    width: 1600px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.hamburger {
+    
+}
+
+.titulo {
+    margin: 0 auto;
+}

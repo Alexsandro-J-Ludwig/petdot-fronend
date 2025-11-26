@@ -1,0 +1,25 @@
+.form {
+  background-color: rgb(184, 163, 149);
+  width: 470px;
+  height: 300px;
+  padding: 40px;
+  border-radius: 30px;
+  position: relative; /* posição absoluta */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.field {
+  width: 500px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  margin-top: 20px;
+  text-align: center;
+  color: black;
+  box-shadow: 0 4px 8px rgba(93, 64, 55, 0.4);
+  background: #d3d3d3; /* Um bege/marrom muito claro para o fundo */
+  border: none;
+}

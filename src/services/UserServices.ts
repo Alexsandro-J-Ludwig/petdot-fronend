@@ -13,13 +13,13 @@ class UserService {
         celular: data.celular,
       },
       {
-        withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
       }
     );
 
+    localStorage.setItem("token", `Bearer ${request.data.data}`);
     return request.status;
   }
 
@@ -32,14 +32,14 @@ class UserService {
         contentType: extension,
       },
       {
-        withCredentials: true,
         headers: {
           // "Content-Type": extension,
+          Authorization: localStorage.getItem("token"),
           "Content-Type": "application/json",
         },
       }
     );
-    
+
     return request.data;
   }
 
@@ -54,20 +54,42 @@ class UserService {
         headers: {
           "Content-Type": "application/json",
         },
-        withCredentials: true,
       }
     );
+
+    localStorage.setItem("token", `Bearer ${request.data.data}`);
     return request.status;
   }
 
-  static async sendImage(imageURL: string, file: any, contentType: string) {
-    const request = await axios.put(`${imageURL}`, file, {
-      headers: {
-        "Content-Type": contentType
+  static async updateUser(data: any) {
+    const request = await axios.put(
+      `${url}/user/update`,
+      {
+        data,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
       }
+    );
+
+    if (request.data.data != "") {
+      localStorage.removeItem("token");
+      localStorage.setItem("token", `Bearer ${request.data.data}`);
+    }
+  }
+
+  static async me() {
+    const request = await axios.get(`${url}/user/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
     });
 
-    return request.status
+    return request;
   }
 }
 
