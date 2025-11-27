@@ -1,4 +1,6 @@
 import AddAnimal from "../../components/Animal/AddAnimal/AddAnimal";
+import DeleteAnimal from "../../components/Animal/DeleteAnimal/DeleteAnimal";
+import EditAnimal from "../../components/Animal/EditAnimal/EditAnimal";
 import UserService from "../../services/Users/UserServices";
 import styles from "./Animal.module.css";
 import { useEffect, useState } from "react";
@@ -34,6 +36,16 @@ function Animal() {
         <AddAnimal
           open={openModal === "add"}
           onOpen={() => setOpenModal("add")}
+          onClose={() => setOpenModal(null)}
+        />
+        <EditAnimal
+          open={openModal === "edit"}
+          onOpen={() => setOpenModal("edit")}
+          onClose={() => setOpenModal(null)}
+        />
+        <DeleteAnimal
+          open={openModal === "delete"}
+          onOpen={() => setOpenModal("delete")}
           onClose={() => setOpenModal(null)}
         />
       </div>

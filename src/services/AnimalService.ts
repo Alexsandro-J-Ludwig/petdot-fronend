@@ -47,6 +47,44 @@ class AnimalService {
     });
     return request.status;
   }
+
+  static async getAllAnimals(uuid: string) {}
+
+  static async getAnimal(uuid: string) {}
+
+  static async getAnimalByShelter(uuid: string) {
+    const request = await axios.get(`${url}/animal/getByShelter/${uuid}`, {
+      headers: {
+        "Authorization": localStorage.getItem("token")
+      }
+    })
+
+    return request
+  }
+
+  static async editAnimal(uuid: string, data: any) {
+    const response = await axios.put(`${url}/animal/${uuid}`, {
+      data
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("token")
+      }
+    })
+
+    return response;
+  }
+
+  static async deleteAnimal(uuid: string) {
+    const response = await axios.delete(`${url}/animal/${uuid}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("token"),
+      }
+    })
+    
+    return response
+  }
 }
 
 export default AnimalService;
