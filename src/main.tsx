@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Lobby from "./pages/Lobby/Lobby";
 import Menu from "./pages/Menu/Menu";
 import Shelter from "./pages/Shelter/Shelter";
+import Animal from "./pages/Animal/Animal";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/shelter",
     element: <Shelter />,
+  },
+  {
+    path: "/animal",
+    element: <Animal />,
   },
 ]);
 

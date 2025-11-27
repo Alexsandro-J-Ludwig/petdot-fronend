@@ -21,7 +21,7 @@ function Nav() {
       window.location.href = "/";
     } else {
       const acesso = response.data.acesso;
-
+      
       if (acesso == 2) {
         setAdmin(true);
       }
