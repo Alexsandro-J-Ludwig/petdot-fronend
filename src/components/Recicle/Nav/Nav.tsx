@@ -1,6 +1,6 @@
 import { Menu, MenuItem } from "@mui/material";
 import Hamburger from "hamburger-react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import styles from "./Nav.module.css";
 import UserService from "../../../services/Users/UserServices";
 
@@ -9,10 +9,6 @@ function Nav() {
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const [admin, setAdmin] = useState(false);
 
-  useEffect(() => {
-    requestAPI();
-  });
-
   const requestAPI = async () => {
     const response = await UserService.me();
 
@@ -20,11 +16,7 @@ function Nav() {
       localStorage.removeItem("token");
       window.location.href = "/";
     } else {
-      const acesso = response.data.acesso;
-      
-      if (acesso == 2) {
-        setAdmin(true);
-      }
+      setAdmin(true)
     }
   };
 
@@ -51,7 +43,7 @@ function Nav() {
             window.location.href = "/profile";
           }}
         >
-          Pefil
+          Profile
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -62,7 +54,7 @@ function Nav() {
           Área Abrigo
         </MenuItem>
 
-        {admin == true && (
+        {admin && (
           <MenuItem
             onClick={() => {
               setOpen(false);
@@ -74,11 +66,7 @@ function Nav() {
         )}
       </Menu>
 
-      <h1 className={styles["titulo"]}>
-        <a className={styles["link"]} href="/menu">
-          PetDot
-        </a>
-      </h1>
+      <h1 className={styles["titulo"]}>PetDot</h1>
     </div>
   );
 }

@@ -30,15 +30,13 @@ function Animal() {
 
   return (
     <>
-      {admin == true && (
-        <div>
-          <AddAnimal
-            open={openModal === "add"}
-            onOpen={() => setOpenModal("add")}
-            onClose={() => setOpenModal(null)}
-          />
-        </div>
-      )}
+      <div>
+        <AddAnimal
+          open={openModal === "add"}
+          onOpen={() => setOpenModal("add")}
+          onClose={() => setOpenModal(null)}
+        />
+      </div>
     </>
   );
 }

@@ -1,5 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "./Select/Select";
+import styles from "./AddAnimal.module.css";
+import Nav from "../../Recicle/Nav/Nav";
+import AnimalService from "../../../services/AnimalService";
+import ShelterService from "../../../services/ShelterService";
 
 type AddShelterProps = {
   open: boolean;
@@ -15,28 +19,135 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
   const [species, setspecies] = useState("");
   const [breed, setbreed] = useState("");
   const [gender, setgender] = useState("");
-  const [vacines, setvacines] = useState([]);
-  const [description, setdescription] = useState("");
+  const [vaccines, setVacines] = useState<string[]>([]);
+  const [shelterUUID, setShelterUUID] = useState("");
+  const [imageURL, setImageURL] = useState();
 
-  const addAnimal = async () => {
-  }
+  const [shelters, setShelters] = useState(
+    [] as { uuid: string; name: string }[]
+  );
+
+  //UseEffect para pegar todos os abrigos
+  useEffect(() => {
+    getAllShelter();
+  }, []);
+
+  const getAllShelter = async () => {
+    const uuid = localStorage.getItem("token") || "";
+    const response = await ShelterService.getAllShelter(uuid);
+
+    if (response.data) {
+      // transforma a resposta em um array novo
+      const lista = response.data.data.map((item: any) => ({
+        uuid: item.uuid,
+        name: item.name,
+      }));
+
+      setShelters(lista); // apenas um set, limpo e elegante
+    }
+  };
+
+  const getURL = async (f: File) => {
+    const extension = f.type;
+
+    const TYPES_ACCEPTED = ["image/png", "image/jpeg", "image/jpg"];
+
+    if (extension && TYPES_ACCEPTED.includes(extension)) {
+      const response = await AnimalService.getURL({
+        filename: f.name.split(".")[0],
+        type: extension,
+      });
+
+      if (response.data) {
+        const request = await AnimalService.sendImage(
+          response.data.uploadURL,
+          f
+        );
+
+        if (request === 200) {
+          console.log("sucesso em enviar imagem");
+
+          setImageURL(response.data.publicURL);
+
+          return true;  
+        }
+      }
+    }
+
+    alert("Formato de imagem não suportado");
+    return false;
+  };
+
+  //Pegar a url de imagem para salvar e guardar a url public de imagem
+
+  const addAnimal = async () => {  
+    const response = await AnimalService.addShelter({
+      name,
+      birth,
+      species,
+      breed,
+      gender,
+      vaccines,
+      shelterUUID,
+      imageURL,
+    });
+
+    if (response.status == 201) {
+      alert("Animal criado com sucesso!");
+    }
+  };
+
+  const handleClick = async () => {
+    if (files && files.length > 0) {
+      await getURL(files[0]);
+    }
+    addAnimal();
+  };
 
   return (
     <>
-      <h1>Adicionar Animal</h1>
-
-      <button onClick={onOpen}>Adicionar</button>
+      <Nav />
+      <button
+        onClick={() => {
+          onOpen();
+          getAllShelter();
+        }}
+      >
+        Adicionar
+      </button>
 
       {open && (
         <div>
+          <h1>Adicionar Animal</h1>
+
           <div>
-            {files && <p>{files[0].name}</p>}
-            <input
-              type="file"
+            <select
+              className={styles["field"]}
               onChange={(e) => {
-                setFiles(e.target.files);
+                setShelterUUID(e.target.value);
               }}
-            />
+            >
+              <option value="">Selecione um abrigo</option>
+              {shelters.map((item: any, index: number) => (
+                <option key={index} value={item.uuid}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            {files && <img src={URL.createObjectURL(files[0])} alt="preview" />}
+            {!files && (
+              <input
+                className={styles["image-input"]}
+                type="file"
+                onChange={(e) => {
+                  const f = e.target.files;
+                  setFiles(f);
+                }}
+              />
+            )}
           </div>
           <input
             placeholder="Nome"
@@ -52,29 +163,37 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
             }}
           />
 
-          <input
-            placeholder="Espécie"
+          <select
             onChange={(e) => {
               setspecies(e.target.value);
             }}
-          />
+          >
+            <option value="">Espécie</option>
+            <option value="Cachorro">Cachorro</option>
+            <option value="Gato">Gato</option>
+            <option value="Pássaro">Pássaro</option>
+            <option value="Coelho">Coelho</option>
+
+          </select>
           <input
             placeholder="Raça"
             onChange={(e) => {
               setbreed(e.target.value);
             }}
           />
-          <input
-            placeholder="Genero"
+          <select
             onChange={(e) => {
               setgender(e.target.value);
             }}
-          />
-          <Select specie={species}/>
-          <textarea
-            placeholder="Descrição"
-            onChange={(e) => setdescription(e.target.value)}
-          />
+          >
+            <option value="">Gênero</option>
+            <option value="male">Macho</option>
+            <option value="female">Fêmea</option>
+          </select>
+
+          <Select specie={species} vacines={vaccines} setVacines={setVacines} />
+
+          <button onClick={handleClick}>Cadastrar Animal</button>
         </div>
       )}
     </>
