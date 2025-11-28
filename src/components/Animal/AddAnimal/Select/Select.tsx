@@ -1,12 +1,12 @@
 import styles from "./Select.module.css";
 
 type Props = {
-  specie: string;
+  species: string;
   vacines: string[];
   setVacines: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-function Select({ specie, vacines, setVacines }: Props) {
+function Select({ species, vacines, setVacines }: Props) {
   const toggle = (v: string) => {
     setVacines((atual) =>
       atual.includes(v) ? atual.filter((x) => x !== v) : [...atual, v]
@@ -40,7 +40,7 @@ function Select({ specie, vacines, setVacines }: Props) {
 
   return (
     <>
-      {specie == "Cachorro" && (
+      {species == "Cachorro" && (
         <div>
           {cachorro.map((item, indice) => (
             <label key={indice} className={styles["vacinas"]}>
@@ -55,7 +55,7 @@ function Select({ specie, vacines, setVacines }: Props) {
           ))}
         </div>
       )}
-      {specie == "Gato" && (
+      {species == "Gato" && (
         <div>
           {gato.map((item, indice) => (
             <label key={indice} className={styles["vacinas"]}>
@@ -70,7 +70,7 @@ function Select({ specie, vacines, setVacines }: Props) {
           ))}
         </div>
       )}
-      {specie == "Pássaro" && (
+      {species == "Pássaro" && (
         <div>
           {passaro.map((item, indice) => (
             <label key={indice} className={styles["vacinas"]}>
@@ -85,7 +85,7 @@ function Select({ specie, vacines, setVacines }: Props) {
           ))}
         </div>
       )}
-      {specie == "Coelho" && (
+      {species == "Coelho" && (
         <div>
           {coelho.map((item, indice) => (
             <label key={indice} className={styles["vacinas"]}>

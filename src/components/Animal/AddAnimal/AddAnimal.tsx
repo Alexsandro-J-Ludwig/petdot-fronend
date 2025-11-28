@@ -191,7 +191,7 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
             <option value="female">Fêmea</option>
           </select>
 
-          <Select specie={species} vacines={vaccines} setVacines={setVacines} />
+          <Select species={species} vacines={vaccines} setVacines={setVacines} />
 
           <button onClick={handleClick}>Cadastrar Animal</button>
         </div>

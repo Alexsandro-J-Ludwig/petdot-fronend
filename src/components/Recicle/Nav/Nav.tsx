@@ -66,7 +66,7 @@ function Nav() {
         )}
       </Menu>
 
-      <h1 className={styles["titulo"]}>PetDot</h1>
+      <h1 className={styles["titulo"]}><a href="/menu">PetDot</a></h1>
     </div>
   );
 }

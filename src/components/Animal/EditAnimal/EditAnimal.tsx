@@ -45,7 +45,7 @@ function EditAnimal({ open, onOpen, onClose }: AddShelterProps) {
         uuid: item.uuid,
         name: item.name,
         imageURL: item.imageURL,
-        birth: age(item.redemption_date),
+        birth: item.redemption_date,
         disponible: item.disponible,
       }));
 
@@ -53,33 +53,7 @@ function EditAnimal({ open, onOpen, onClose }: AddShelterProps) {
     }
   };
 
-  const age = (date: string) => {
-    const a = new Date(date);
-    const b = new Date();
-
-    let anos = b.getFullYear() - a.getFullYear();
-    let meses = b.getMonth() - a.getMonth();
-
-    // Ajuste caso o mês final seja menor que o inicial
-    if (meses < 0) {
-      anos--;
-      meses += 12;
-    }
-
-    // Ajuste se quiser considerar também o dia
-    if (b.getDate() < a.getDate()) {
-      meses--;
-
-      if (meses < 0) {
-        anos--;
-        meses += 12;
-      }
-    }
-
-    return `${anos === 0 ? "" : anos === 1 ? "ano e" : "anos e"} ${meses} ${
-      meses === 1 ? "mes" : "meses"
-    }`;
-  };
+  
 
   return (
     <>

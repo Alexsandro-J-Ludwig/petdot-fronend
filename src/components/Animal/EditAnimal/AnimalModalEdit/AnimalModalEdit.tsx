@@ -138,7 +138,7 @@ function AnimalModalEdit({ uuid, name, imageURL, birth, disponible }: Props) {
             <option value="female">Fêmea</option>
           </select>
 
-          <Select specie={species} vacines={vaccines} setVacines={setVacines} />
+          <Select species={species} vacines={vaccines} setVacines={setVacines} />
 
           <button onClick={handleUpdate}>Atualiaar Animal</button>
         </div>

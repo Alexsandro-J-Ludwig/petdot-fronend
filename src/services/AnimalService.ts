@@ -48,9 +48,28 @@ class AnimalService {
     return request.status;
   }
 
-  static async getAllAnimals(uuid: string) {}
+  static async getAllAnimals() {
+    const request = await axios.get(`${url}/animal/get`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("token")
+      }
+    })
 
-  static async getAnimal(uuid: string) {}
+    return request
+  }
+
+  static async getAnimal(uuid: string) {
+    const request = await axios.get(`${url}/animal/get/${uuid}`, {
+      headers: {
+       "Content-Type": "application/json",
+      "Authorization": localStorage.getItem("token")
+      }
+    })
+
+    return request;
+
+  }
 
   static async getAnimalByShelter(uuid: string) {
     const request = await axios.get(`${url}/animal/getByShelter/${uuid}`, {
