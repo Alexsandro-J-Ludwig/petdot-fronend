@@ -12,9 +12,9 @@ function Lobby() {
           <Register />
           <Login />
         </div>
-
-        <Footer />
       </div>
+
+      
     </div>
   );
 }

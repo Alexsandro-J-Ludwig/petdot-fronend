@@ -2,7 +2,9 @@ import { Modal } from "@mui/material";
 import { useEffect, useState } from "react";
 import AnimalService from "../../../../services/AnimalService";
 import AdoptionsService from "../../../../services/Adoption";
-import { Button, Card, Image } from "@chakra-ui/react";
+import { Button, Card } from "antd";
+
+const { Meta } = Card;
 
 function Adoption() {
   const [animals, setAnimals] = useState(
@@ -138,24 +140,37 @@ function Adoption() {
   return (
     <>
       {animals.map((item: any, indice: number) => (
-        <Card.Root key={indice} maxW={300} maxH={600}>
-          <Image src={item.image} alt="preview" maxH={500} maxW={300} />
-          <Card.Body>
-            <Card.Title>{item.name}</Card.Title>
-            <Card.Description>Idade: {item.age}</Card.Description>
-            <Card.Description>Disponivel: {item.disponible}</Card.Description>
-          </Card.Body>
-          <Card.Footer>
-            <Button
-              onClick={() => {
-                handleOpen();
-                getAnimal(item.uuid);
-              }}
-            >
-              Adotar
-            </Button>
-          </Card.Footer>
-        </Card.Root>
+        <div key={indice}>
+          <Card
+            hoverable
+            style={{ width: 240 }}
+            cover={<img draggable={false} alt="preview" src={item.image} />}
+          >
+            <Meta title={item.name} />
+
+            <div>
+              <h3>Idade:</h3>
+              <p>{item.age}</p>
+            </div>
+
+            <div>
+              <span>
+                dispoível: <p>{item.disponible}</p>
+              </span>
+            </div>
+
+            {item.disponible === "Sim" && (
+              <Button
+                onClick={() => {
+                  handleOpen();
+                  getAnimal(item.uuid);
+                }}
+              >
+                Adotar
+              </Button>
+            )}
+          </Card>
+        </div>
       ))}
 
       <Modal open={open} onClose={handleClose}>

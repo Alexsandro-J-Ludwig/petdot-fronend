@@ -1,8 +1,12 @@
 .lobby {
-  background: #ffffff;
-  background: linear-gradient(
-    139deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(181, 136, 112, 1) 100%
-  );
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size:4rem;
+  font-weight: bold;
+  color: linear-gradient(139deg,rgba(79, 62, 62, 1) 0%, rgba(181, 136, 112, 1) 100%);
 }
