@@ -4,25 +4,33 @@
   height: 670px;
   padding: 40px;
   border-radius: 30px;
-  position: absolute;  /* posição absoluta */
-  top: 50%;            /* empurra pro meio */
+  position: absolute; /* posição absoluta */
+  top: 50%; /* empurra pro meio */
   left: 50%;
-  transform: translate(-50%, -50%);  /* ajusta o centro real */
+  transform: translate(-50%, -50%); /* ajusta o centro real */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.493) 10px 10px 50px;
+
+  animation: transition 0.5s ease forwards;
 }
 
 .stepper {
-    margin-top: 20px;
+  margin-top: 20px;
+  animation: transition 0.5s ease forwards;
 }
 
-.button {
-  width: 200px;
-  height: 40px;
-  border-radius: 10px;
+.button,
+.back-button,
+.next-button,
+.submit-button {
+  margin: 20px;
+  width: 150px;
+  height: 45px;
+  font-size: 15px;
+  border-radius: 14px;
   margin-top: 20px;
   background-color: #5d4037;
   color: white;
@@ -33,5 +41,16 @@
 }
 
 .button:hover {
-    background-color: #412d27;
+  background-color: #412d27;
+}
+
+@keyframes transition {
+  100% {
+    width: 550px;
+    height: 670px;
   }
+  0% {
+    width: 0px;
+    height: 0px;
+  }
+}

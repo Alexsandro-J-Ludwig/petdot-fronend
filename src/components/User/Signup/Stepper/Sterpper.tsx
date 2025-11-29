@@ -47,8 +47,7 @@ function Register() {
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        className={styles["stepper-container"]}
       >
         <div className={styles["container-register"]}>
           <h1 className={styles["title"]}>Cadastro</h1>
@@ -64,7 +63,7 @@ function Register() {
               <div className={styles["button-container"]}>
                 {step > 0 && (
                   <button
-                    className={styles["button"]}
+                    className={styles["back-button"]}
                     onClick={() => setStep(step - 1)}
                   >
                     Back
@@ -73,7 +72,7 @@ function Register() {
 
                 {step < 2 && (
                   <button
-                    className={styles["button"]}
+                    className={styles["next-button"]}
                     onClick={() => {
                       setStep(step + 1);
                     }}
@@ -84,7 +83,7 @@ function Register() {
 
                 {step == 2 && (
                   <button
-                    className={styles["button"]}
+                    className={styles["submit-button"]}
                     onClick={() => setStep(step + 1)}
                   >
                     Avançar

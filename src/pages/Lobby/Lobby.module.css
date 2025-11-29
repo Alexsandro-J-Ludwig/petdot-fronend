@@ -1,12 +1,62 @@
 .lobby {
   display: flex;
-  height: 90vh;
+  height: 100vh; /* usa 100% da tela */
+  width: 100vw; /* garante que ocupa toda a largura */
   align-items: center;
   justify-content: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.39), rgba(0, 0, 0, 0.418)),
+    url("../../assets/Images/animais.jpg");
+
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-h1 {
-  font-size:4rem;
+.container-lobby {
+  background-color: rgb(228, 228, 228);
+  width: 22vw;
+  height: 36vh;
+  border-radius: 20px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.page {
+  margin-top: 1vh;
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title {
+  font-size: 4rem;
   font-weight: bold;
-  color: linear-gradient(139deg,rgba(79, 62, 62, 1) 0%, rgba(181, 136, 112, 1) 100%);
+  color: rgb(116, 80, 26);
+  text-align: center;
+  text-shadow: 3px 3px 2px rgba(0, 0, 0, 0.301);
+  margin: 10px;
+}
+
+.description {
+  color: rgb(116, 80, 26);
+  text-decoration: underline;
+  font-size: 17px;
+  margin-bottom: 15vh;
+}
+
+.pata-icon {
+  width: 80px;
+  height: 80px;
+  margin: 6px;
+  transform: skew(-30deg, 30deg);
+}
+
+.container-register-login {
+  position: fixed;
+  margin-top: 10vh;
+  align-items: center;
 }

@@ -2,10 +2,6 @@ import styles from "./Address.module.css";
 import Select from "./select/Select";
 import { useAddress } from "../Contexts/AddressContext";
 
-type Props = {
-  setStepper: React.Dispatch<React.SetStateAction<number>>;
-};
-
 function Address() {
   const {
     address,
@@ -35,15 +31,34 @@ function Address() {
         }}
         required
       />
-      <input
-        placeholder="Numero"
-        className={styles["field"]}
-        value={number}
-        onChange={(e) => {
-          setNumber(e.target.value);
-        }}
-        required
-      />
+
+      <div className={styles["select-number"]}>
+        <input
+          placeholder="Numero"
+          className={styles["field-number"]}
+          value={number}
+          onChange={(e) => {
+            setNumber(e.target.value);
+          }}
+          disabled={number === "S/N" ? true : false}
+        />
+        <label className={styles["checkbox-text"]}>
+          <input
+            type="checkbox"
+            checked={number === "S/N"}
+            className={styles["checkbox-number"]}
+            onChange={(e) => {
+              if (e.target.checked) {
+                setNumber("S/N");
+              } else {
+                setNumber("");
+              }
+            }}
+          />
+          S/N
+        </label>
+      </div>
+
       <input
         placeholder="Complemento"
         className={styles["field"]}

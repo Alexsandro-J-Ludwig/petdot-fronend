@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 20px;
 }
 
 .field {
@@ -22,6 +23,47 @@
   outline: none;
 }
 
+.select-number { 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.field-number {
+  width: 375px;
+  height: 45px;
+  margin-top: 20px;
+  border-radius: 10px;
+  background: #d3d3d3;
+  border: none;
+  box-shadow: 0 4px 8px rgba(93, 64, 55, 0.4);
+}
+
+.field-number:focus {
+  outline: none;
+} 
+
+.field-number:disabled {
+  background: rgb(172, 172, 172);
+  animation: select 0.5s ease forwards;
+}
+
+.checkbox-text{
+  margin-left: 40px;
+  margin-top: 20px;
+  font-size: 20px;
+  display: flex;
+  align-items: center; /* deixa checkbox e texto centralizados verticalmente */
+  gap: 6px;            /* espaçamento bonitinho */
+}
+
+.checkbox-number {
+  width: 40px;
+  box-shadow: 0 4px 8px rgba(93, 64, 55, 0.4);
+  height: 40px;
+  border-radius: 40px;
+}
+
 .button {
   width: 200px;
   height: 40px;
@@ -33,4 +75,12 @@
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(93, 64, 55, 0.4);
   font-weight: bold;
+}
+
+@keyframes select {
+  0% {
+    background: #d3d3d3;
+  } 100% {
+     background: rgb(172, 172, 172);
+  }
 }
