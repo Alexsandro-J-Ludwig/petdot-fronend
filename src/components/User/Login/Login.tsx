@@ -25,7 +25,7 @@ function Login() {
 
   return (
     <>
-      <button onClick={handleOpen}>Entrar</button>
+      <button onClick={handleOpen} className={styles["button"]}>Entrar</button>
 
       <Modal
         open={open}

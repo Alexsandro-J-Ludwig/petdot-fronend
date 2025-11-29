@@ -6,6 +6,7 @@ import Lobby from "./pages/Lobby/Lobby";
 import Menu from "./pages/Menu/Menu";
 import Shelter from "./pages/Shelter/Shelter";
 import Animal from "./pages/Animal/Animal";
+import { Provider } from "./components/ui/provider";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,9 @@ const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <Provider defaultTheme="dark">
+        <RouterProvider router={router} />
+      </Provider>
     </React.StrictMode>
   );
 } else {

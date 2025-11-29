@@ -1,1 +1,8 @@
-    
+.lobby {
+  background: #ffffff;
+  background: linear-gradient(
+    139deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(181, 136, 112, 1) 100%
+  );
+}

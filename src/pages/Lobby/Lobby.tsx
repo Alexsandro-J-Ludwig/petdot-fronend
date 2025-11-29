@@ -5,7 +5,7 @@ import styles from "./Lobby.module.css";
 
 function Lobby() {
   return (
-    <>
+    <div className={styles["lobby"]}>
       <div className={styles["container-lobby"]}>
         <h1>PetDot</h1>
         <div className={styles["container-register-login"]}>
@@ -15,7 +15,7 @@ function Lobby() {
 
         <Footer />
       </div>
-    </>
+    </div>
   );
 }
 

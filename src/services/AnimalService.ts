@@ -3,7 +3,7 @@ import axios from "axios";
 const url = "http://localhost:3000";
 
 class AnimalService {
-  static async addShelter(data: any) {
+  static async addAnimal(data: any) {
     const request = await axios.post(
       `${url}/animal/`,
       {
@@ -12,7 +12,7 @@ class AnimalService {
         species: data.species,
         race: data.breed,
         gender: data.gender,
-        vaccines: data.vacines,
+        vaccines: data.vaccines,
         uuid_shelter: data.shelterUUID,
         description: "",
         imageURL: data.imageURL,

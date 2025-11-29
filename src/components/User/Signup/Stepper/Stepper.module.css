@@ -18,3 +18,20 @@
 .stepper {
     margin-top: 20px;
 }
+
+.button {
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  margin-top: 20px;
+  background-color: #5d4037;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(93, 64, 55, 0.4);
+  font-weight: bold;
+}
+
+.button:hover {
+    background-color: #412d27;
+  }

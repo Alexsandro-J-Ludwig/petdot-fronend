@@ -57,17 +57,17 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
         filename: f.name.split(".")[0],
         type: extension,
       });
-
-      if (response.data) {
+      
+      if (response.data) {;
         const request = await AnimalService.sendImage(
-          response.data.uploadURL,
+          response.data.data.uploadURL,
           f
         );
 
         if (request === 200) {
           console.log("sucesso em enviar imagem");
 
-          setImageURL(response.data.publicURL);
+          setImageURL(response.data.data.publicURL);
 
           return true;  
         }
@@ -80,8 +80,10 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
 
   //Pegar a url de imagem para salvar e guardar a url public de imagem
 
-  const addAnimal = async () => {  
-    const response = await AnimalService.addShelter({
+  const addAnimal = async () => {
+    console.log(name, birth, species, breed, gender, vaccines, shelterUUID, imageURL);
+    
+    const response = await AnimalService.addAnimal({
       name,
       birth,
       species,

@@ -24,7 +24,7 @@ function DeleteAnimal({ open, onOpen, onClose }: AddShelterProps) {
   const getAllShelter = async () => {
     const uuid = localStorage.getItem("token") || "";
     const response = await ShelterService.getAllShelter(uuid);
-
+    
     if (response.data) {
       // transforma a resposta em um array novo
       const lista = response.data.data.map((item: any) => ({
@@ -38,12 +38,12 @@ function DeleteAnimal({ open, onOpen, onClose }: AddShelterProps) {
 
   const getAnimalByShelter = async (value: string) => {
     const response = await AnimalService.getAnimalByShelter(value);
-
+    
     if (response.status === 200) {
       const lista = response.data.map((item: any) => ({
-        uuid: item.uuid,
-        name: item.name,
-        imageURL: item.imageURL,
+        uuid: item.data.uuid,
+        name: item.data.name,
+        imageURL: item.data.imageURL,
       }));
 
       setAnimals(lista);
@@ -87,7 +87,7 @@ function DeleteAnimal({ open, onOpen, onClose }: AddShelterProps) {
           <div>
             {animals.map((item: any, index: number) => (
               <div key={index}>
-                <Confirm {...item}/>
+                <Confirm uuid={item.uuid} name={item.name} imageURL={item.imageURL}/>
               </div>
             ))}
           </div>

@@ -1,7 +1,8 @@
 import { Modal } from "@mui/material";
 import { useEffect, useState } from "react";
-import AnimalService from "../../../../services/AnimalService"; 
+import AnimalService from "../../../../services/AnimalService";
 import AdoptionsService from "../../../../services/Adoption";
+import { Button, Card, Image } from "@chakra-ui/react";
 
 function Adoption() {
   const [animals, setAnimals] = useState(
@@ -18,7 +19,7 @@ function Adoption() {
   const [name, setName] = useState("");
   const [images, setImages] = useState("");
   const [ages, setAge] = useState("");
-  const [disponible, setDisponible] = useState(false);
+  const [disponible, setDisponible] = useState("");
   const [vaccines, setVaccines] = useState([]);
   const [species, setSpecies] = useState("");
   const [breed, setBreed] = useState("");
@@ -51,12 +52,12 @@ function Adoption() {
 
       if (response.status === 200) {
         const lista = response.data.map((item: any) => ({
-          uuid: item.uuid,
-          name: item.name,
-          image: item.imageURL,
-          age: age(item.redemption_date),
-          disponible: item.disponible,
-          vaccines: item.vaccines,
+          uuid: item.data.uuid,
+          name: item.data.name,
+          image: item.data.imageURL,
+          age: age(item.data.redemption_date),
+          disponible: item.data.disponible === true ? "Sim" : "Não",
+          vaccines: item.data.vaccines,
         }));
 
         setAnimals(lista);
@@ -69,20 +70,18 @@ function Adoption() {
   const getAnimal = async (uuid: string) => {
     const response = await AnimalService.getAnimal(uuid);
 
-    console.log(response.data);
-    
     if (response.data) {
-      setUuid(response.data.uuid);
-      setName(response.data.name);
-      setImages(response.data.imageURL);
-      setAge(age(response.data.redemption_date));
-      setDisponible(response.data.disponible);
-      setVaccines(response.data.vaccines);
-      setSpecies(response.data.species);
-      setBreed(response.data.race);
-      setGender(response.data.gender);
-      setRedemption_date(response.data.redemption_date);
-      setUuidShelter(response.data.uuid_shelter);
+      setUuid(response.data.data.uuid);
+      setName(response.data.data.name);
+      setImages(response.data.data.imageURL);
+      setAge(age(response.data.data.redemption_date));
+      setDisponible(response.data.data.disponible === true ? "Sim" : "Não");
+      setVaccines(response.data.data.vaccines);
+      setSpecies(response.data.data.species);
+      setBreed(response.data.data.race);
+      setGender(response.data.data.gender);
+      setRedemption_date(response.data.data.redemption_date);
+      setUuidShelter(response.data.data.uuid_shelter);
     }
   };
 
@@ -114,17 +113,17 @@ function Adoption() {
     } ${meses} ${meses === 1 ? "mes" : "meses"}`;
   };
 
-  const adotar = async () => {    
+  const adotar = async () => {
     const response = await AdoptionsService.register({
-        uuid, 
-        uuidShelter
-    })
+      uuid,
+      uuidShelter,
+    });
 
-    if(response.status === 201) {
-        alert("Adotou com sucesso!")
-        desableAnimal()
+    if (response.status === 201) {
+      alert("Adotou com sucesso!");
+      desableAnimal();
     }
-  }
+  };
 
   const desableAnimal = async () => {
     const response = await AnimalService.editAnimal(uuid, {
@@ -132,42 +131,57 @@ function Adoption() {
     });
 
     if (response.status === 200) {
-        console.log("Animal desabilitado com sucesso!");
-  }
-}
+      console.log("Animal desabilitado com sucesso!");
+    }
+  };
 
   return (
     <>
       {animals.map((item: any, indice: number) => (
-        <div key={indice}>
-          <button
-            onClick={() => {
-              handleOpen();
-              getAnimal(item.uuid);
-            }}
-          >
-            <img src={item.image} alt="preview" />
-            {item.name}
-            {item.age}
-            {item.disponible}
-          </button>
-        </div>
+        <Card.Root key={indice} maxW={300} maxH={600}>
+          <Image src={item.image} alt="preview" maxH={500} maxW={300} />
+          <Card.Body>
+            <Card.Title>{item.name}</Card.Title>
+            <Card.Description>Idade: {item.age}</Card.Description>
+            <Card.Description>Disponivel: {item.disponible}</Card.Description>
+          </Card.Body>
+          <Card.Footer>
+            <Button
+              onClick={() => {
+                handleOpen();
+                getAnimal(item.uuid);
+              }}
+            >
+              Adotar
+            </Button>
+          </Card.Footer>
+        </Card.Root>
       ))}
 
       <Modal open={open} onClose={handleClose}>
         <div>
-          <img src={images} alt="preview" />
+          {/* <img src={images} alt="preview" /> */}
 
           <h2>{name}</h2>
+
+          <h3>Data de nascimento:</h3>
           <p>
-            Data de nascimento: {redemption_date} - {ages}
+            {redemption_date} - {ages}
           </p>
 
-          <p>
-            Especie: {species} - Raça: {breed} - Genero: {gender}
-          </p>
+          <h3>Especie:</h3>
+          <p>{species}</p>
 
-            <button onClick={adotar}>Adotar</button>
+          <h3>Raça:</h3>
+          <p>{breed}</p>
+
+          <h3>Genero:</h3>
+          <p>{gender}</p>
+
+          <h3>Vacinas:</h3>
+          <p>{vaccines.join(", ")}</p>
+
+          <button onClick={adotar}>Adotar</button>
         </div>
       </Modal>
     </>

@@ -15,8 +15,7 @@ function Confirm({ uuid, name, imageURL }: Props) {
 
   const [valor, setValor] = useState("");
 
-  const nome = name.toLowerCase()
-  const confirm = `deletar ${nome}`;
+  const confirm = `deletar ${name}`;
 
   const deletar = async () => {
     if (valor === confirm) {
@@ -24,6 +23,7 @@ function Confirm({ uuid, name, imageURL }: Props) {
 
       if (response.status == 200) {
         alert("Animal deletado!");
+        window.location.reload
       }
     } else {
         alert("Frase incorreta")
