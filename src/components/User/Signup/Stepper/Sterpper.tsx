@@ -1,16 +1,17 @@
 import { Modal } from "@mui/material";
-import { useState } from "react";
+import { use, useState } from "react";
 import Signup from "../Register/Signup";
 import Address from "../Address/Address";
 import RegisterContent from "../RegisterContent/RegisterContent";
 import styles from "./Stepper.module.css";
-import { UserContext } from "../Contexts/UserContext,";
+import { UserContext, useUser } from "../Contexts/UserContext,";
 import { AddressContext } from "../Contexts/AddressContext";
 import { Steps } from "antd";
 import {
   UserAddOutlined,
   HomeOutlined,
   CheckOutlined,
+  ArrowLeftOutlined,
 } from "@ant-design/icons";
 
 function Register() {
@@ -25,15 +26,12 @@ function Register() {
 
   const stepsItems = [
     {
-      title: "Cadastro",
       icon: <UserAddOutlined style={{ color: step >= 0 ? "blue" : "grey" }} />,
     },
     {
-      title: "Endereço",
       icon: <HomeOutlined style={{ color: step >= 1 ? "blue" : "grey" }} />,
     },
     {
-      title: "Confirmar",
       icon: <CheckOutlined style={{ color: step >= 2 ? "blue" : "grey" }} />,
     },
   ];
@@ -49,15 +47,21 @@ function Register() {
         onClose={handleClose}
         className={styles["stepper-container"]}
       >
-        <div className={styles["container-register"]}>
+        <div className={styles[`container-register-${step}`]}>
           <h1 className={styles["title"]}>Cadastro</h1>
 
           <UserContext>
             <AddressContext>
-              <Steps current={step} items={stepsItems} />
+              <div className={styles["steps-container"]}>
+                <Steps
+                  current={step}
+                  items={stepsItems}
+                  titlePlacement="vertical"
+                />
+              </div>
 
-              {step === 0 && <Signup />}
-              {step === 1 && <Address />}
+              {step === 0 && <Signup setStepper={setStep}/>}
+              {step === 1 && <Address setStepper={setStep}/>}
               {step === 2 && <RegisterContent />}
 
               <div className={styles["button-container"]}>
@@ -66,18 +70,7 @@ function Register() {
                     className={styles["back-button"]}
                     onClick={() => setStep(step - 1)}
                   >
-                    Back
-                  </button>
-                )}
-
-                {step < 2 && (
-                  <button
-                    className={styles["next-button"]}
-                    onClick={() => {
-                      setStep(step + 1);
-                    }}
-                  >
-                    Avançar
+                    <ArrowLeftOutlined />
                   </button>
                 )}
 

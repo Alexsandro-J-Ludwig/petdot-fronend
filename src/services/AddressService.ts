@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:3000";
+const url = "https://petdot-backend.onrender.com";
 
 class AddressService {
   static async addAddress(data: any) {

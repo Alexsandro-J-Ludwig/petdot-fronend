@@ -1,8 +1,14 @@
 import styles from "./Address.module.css";
 import Select from "./select/Select";
 import { useAddress } from "../Contexts/AddressContext";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import { triggerSnackbar } from "@/components/Error/Error";
 
-function Address() {
+type Props = {
+  setStepper: React.Dispatch<React.SetStateAction<number>>;
+};
+
+function Address({ setStepper }: Props) {
   const {
     address,
     setAddress,
@@ -19,6 +25,35 @@ function Address() {
     cep,
     setCep,
   } = useAddress();
+
+  const validation = () => {
+    if (!address) {
+      triggerSnackbar("Por favor, insira o endereço.");
+      return;
+    }
+    if (!number) {
+      triggerSnackbar("Por favor, insira o número do endereço.");
+      return;
+    }
+    if (!district) {
+      triggerSnackbar("Por favor, insira o bairro.");
+      return;
+    }
+    if (!city) {
+      triggerSnackbar("Por favor, insira a cidade.");
+      return;
+    }
+    if (!state) {
+      triggerSnackbar("Por favor, insira o estado.");
+      return;
+    }
+    if (!cep) {
+      triggerSnackbar("Por favor, insira o CEP.");
+      return;
+    }
+
+    setStepper(2);
+  };
 
   return (
     <div className={styles["container-address"]}>
@@ -94,10 +129,25 @@ function Address() {
         className={styles["field"]}
         value={cep}
         onChange={(e) => {
+          if (e.target.value.length > 5 && e.target.value[5] !== "-") {
+            e.target.value =
+              e.target.value.slice(0, 5) + "-" + e.target.value.slice(5, 8);
+          }
+
           setCep(e.target.value);
         }}
         required
+        maxLength={9}
       />
+
+      <button
+        className={styles["next-button"]}
+        onClick={() => {
+          validation();
+        }}
+      >
+        <ArrowRightOutlined />
+      </button>
     </div>
   );
 }

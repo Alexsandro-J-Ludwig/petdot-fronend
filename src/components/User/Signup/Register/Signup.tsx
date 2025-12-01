@@ -1,11 +1,13 @@
 import styles from "./Signup.module.css";
 import { useUser } from "../Contexts/UserContext,";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import { triggerSnackbar } from "@/components/Error/Error";
 
 type Props = {
   setStepper: React.Dispatch<React.SetStateAction<number>>;
 };
 
-function Signup() {
+function Signup({ setStepper }: Props) {
   const {
     name,
     setName,
@@ -16,6 +18,26 @@ function Signup() {
     phone,
     setPhone,
   } = useUser();
+
+  const validation = () => {
+    if (!name || !email || !password) {
+      triggerSnackbar("Por favor, preencha todos os campos antes de avançar.");
+      return;
+    }
+
+    const valdiationEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!valdiationEmail) {
+      triggerSnackbar("Por favor, insira um email válido.");
+      return;
+    }
+
+    if (phone.length < 10) {
+      triggerSnackbar("Por favor, insira um número de celular válido.");
+      return;
+    }
+
+    setStepper(1);
+  };
 
   return (
     <div className={styles["container-register"]}>
@@ -49,6 +71,15 @@ function Signup() {
         onChange={(e) => setPhone(e.target.value)}
         required
       />
+
+      <button
+        className={styles["next-button"]}
+        onClick={() => {
+          validation();
+        }}
+      >
+        <ArrowRightOutlined />
+      </button>
     </div>
   );
 }

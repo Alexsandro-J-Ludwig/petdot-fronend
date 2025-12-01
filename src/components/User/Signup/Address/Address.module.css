@@ -1,9 +1,26 @@
 .container-address {
+  margin-top: 100px;
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 20px;
+}
+
+.next-button {
+  bottom: 25px;
+  opacity: 0.7;
+  position: absolute;
+  font-size: 25px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+}
+
+.next-button:hover {
+  background-color: rgba(0, 0, 0, 0.048);
+  border-radius: 20px;
 }
 
 .field {
