@@ -36,6 +36,16 @@ function Signup({ setStepper }: Props) {
       return;
     }
 
+    if (password.length < 8) {
+      triggerSnackbar("A senha deve ter pelo menos 8 caracteres.");
+      return;
+    }
+
+    if (password.length > 50) {
+      triggerSnackbar("A senha não pode exceder 50 caracteres.");
+      return;
+    }
+
     setStepper(1);
   };
 
@@ -63,12 +73,27 @@ function Signup({ setStepper }: Props) {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
+        min={8}
+        max={50}
       />
       <input
         className={styles["field"]}
         placeholder="Celular"
         value={phone}
-        onChange={(e) => setPhone(e.target.value)}
+        onChange={(e) => {
+          let v = e.target.value.replace(/\D/g, ""); // tira tudo que não é número
+
+          if (v.length >= 2) {
+            v = `(${v.slice(0, 2)}) ${v.slice(2)}`;
+          }
+
+          if (v.length >= 10) {
+            v = `${v.slice(0, 10)}-${v.slice(10, 14)}`;
+          }
+
+          setPhone(v);
+        }}
+        maxLength={15}
         required
       />
 

@@ -4,13 +4,15 @@ const url = "https://petdot-backend.onrender.com";
 
 class AddressService {
   static async addAddress(data: any) {
+    console.log(data);
+    
     const request = await axios.post(
       `${url}/address/create`,
       {
         address: data.address,
         number: data.number,
         complement: data.complement,
-        neighborhood: data.district,
+        neighborhood: data.neighborhood,
         city: data.city,
         state: data.state,
         cep: data.cep,

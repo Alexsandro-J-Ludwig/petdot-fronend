@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import AnimalService from "../../../../services/AnimalService";
 import AdoptionsService from "../../../../services/Adoption";
 import { Button, Card } from "antd";
+import styles from "./Adoption.module.css";
 
 const { Meta } = Card;
 
@@ -43,6 +44,10 @@ function Adoption() {
       redemption_date: string;
     }[]
   );
+
+  const [search, setSearch] = useState("");
+  const [ageFilter, setAgeFilter] = useState("");
+  const [speciesFilter, setSpeciesFilter] = useState("");
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -139,43 +144,75 @@ function Adoption() {
 
   return (
     <>
-      {animals.map((item: any, indice: number) => (
-        <div key={indice}>
-          <Card
-            hoverable
-            style={{ width: 240 }}
-            cover={<img draggable={false} alt="preview" src={item.image} />}
-          >
-            <Meta title={item.name} />
+      <div className={styles["navbar"]}>
+        <select onChange={(e) => setSpeciesFilter(e.target.value)}>
+          <option value="all">Todos os animais</option>
+          <option value="dogs">Cachorros</option>
+          <option value="cats">Gatos</option>
+        </select>
 
-            <div>
-              <h3>Idade:</h3>
-              <p>{item.age}</p>
-            </div>
+        <select >
+          <option value="age">Idade</option>
+          <option value="young">Jovens</option>
+          <option value="adult">Adultos</option>
+          <option value="elderly">Idosos</option>
+        </select>
 
-            <div>
-              <span>
-                dispoível: <p>{item.disponible}</p>
-              </span>
-            </div>
+        <input
+          type="text"
+          placeholder="Buscar por nome"
+          className={styles["search"]}
+        />
+      </div>
 
-            {item.disponible === "Sim" && (
-              <Button
-                onClick={() => {
-                  handleOpen();
-                  getAnimal(item.uuid);
-                }}
-              >
-                Adotar
-              </Button>
-            )}
-          </Card>
-        </div>
-      ))}
+      <div className={styles["cardsContainer"]}>
+        {animals.map((item: any, indice: number) => (
+          <div key={indice} className={styles["animal-card"]}>
+            <Card
+              hoverable
+              style={{ width: 270, height: 550 }}
+              cover={
+                <img
+                  draggable={false}
+                  alt="preview"
+                  src={item.image}
+                  width={200}
+                  height={330}
+                />
+              }
+              className={styles["card"]}
+            >
+              <Meta title={item.name} />
+
+              <div className={styles["age-container"]}>
+                <h3>Idade:</h3>
+                <h3 className={styles["age"]}>{item.age}</h3>
+              </div>
+
+              <div className={styles["disponible-container"]}>
+                <span>
+                  dispoível: <p>{item.disponible}</p>
+                </span>
+              </div>
+
+              {item.disponible === "Sim" && (
+                <Button
+                  onClick={() => {
+                    handleOpen();
+                    getAnimal(item.uuid);
+                  }}
+                >
+                  Adotar
+                </Button>
+              )}
+            </Card>
+          </div>
+        ))}
+      </div>
 
       <Modal open={open} onClose={handleClose}>
         <div>
-          {/* <img src={images} alt="preview" /> */}
+          <img src={images} alt="preview" />
 
           <h2>{name}</h2>
 

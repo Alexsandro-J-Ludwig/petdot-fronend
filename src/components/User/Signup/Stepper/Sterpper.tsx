@@ -62,7 +62,7 @@ function Register() {
 
               {step === 0 && <Signup setStepper={setStep}/>}
               {step === 1 && <Address setStepper={setStep}/>}
-              {step === 2 && <RegisterContent />}
+              {step === 2 && <RegisterContent setStepper={setStep}/>}
 
               <div className={styles["button-container"]}>
                 {step > 0 && (
@@ -74,14 +74,7 @@ function Register() {
                   </button>
                 )}
 
-                {step == 2 && (
-                  <button
-                    className={styles["submit-button"]}
-                    onClick={() => setStep(step + 1)}
-                  >
-                    Avançar
-                  </button>
-                )}
+              
               </div>
             </AddressContext>
           </UserContext>

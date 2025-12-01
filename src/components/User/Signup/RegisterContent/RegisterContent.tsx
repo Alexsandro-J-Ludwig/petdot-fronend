@@ -2,10 +2,18 @@ import AddressService from "@/services/AddressService";
 import UserService from "@/services/Users/UserServices";
 import { useAddress } from "../Contexts/AddressContext";
 import { useUser } from "../Contexts/UserContext,";
-import { Code, Stack } from "@chakra-ui/react";
-import styles from "./RegisterContent.module.css"
+import styles from "./RegisterContent.module.css";
+import {
+  UserOutlined,
+  EditOutlined,
+  EnvironmentOutlined,
+} from "@ant-design/icons";
 
-function RegisterContent() {
+type Props = {
+  setStepper: React.Dispatch<React.SetStateAction<number>>;
+};
+
+function RegisterContent({ setStepper }: Props) {
   const { name, email, password, phone } = useUser();
   const { address, number, complement, district, city, state, cep } =
     useAddress();
@@ -28,7 +36,7 @@ function RegisterContent() {
       address: address,
       number: number,
       complement: complement,
-      distric: district,
+      neighborhood: district,
       city: city,
       state: state,
       cep: cep,
@@ -40,54 +48,81 @@ function RegisterContent() {
   };
 
   return (
-    <div>
-      <div>
-        <h2>Dados da conta</h2>
+    <div className={styles.container}>
 
-        <h2>Nome: </h2>
-        <p>{name}</p>
+      {/* Dados da Conta */}
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <div className={styles.cardTitleGroup}>
+            <div className={styles.iconWrapperBlue}>
+              <UserOutlined />
+            </div>
+            <h3 className={styles.cardTitle}>Dados da Conta</h3>
+          </div>
+          <button className={styles.editButton}
+            onClick={() => setStepper(0)}
+          >
+            <EditOutlined />
+          </button>
+        </div>
 
-        <h2>Email: </h2>
-        <p>{email}</p>
-
-        <h2>Senha: </h2>
-        <p>{password}</p>
-
-        <h2>Celular: </h2>
-        <p>{phone}</p>
-
-        <button>Editar</button>
-
+        <div className={styles.grid}>
+          <div className={styles.fieldGroup}>
+            <label className={styles.label}>NOME</label>
+            <p className={styles.value}>{name}</p>
+          </div>
+          <div className={styles.fieldGroup}>
+            <label className={styles.label}>EMAIL</label>
+            <p className={styles.value}>{email}</p>
+          </div>
+          <div className={styles.fieldGroup}>
+            <label className={styles.label}>CELULAR</label>
+            <p className={styles.value}>{phone}</p>
+          </div>
+          <div className={styles.fieldGroup}>
+            <label className={styles.label}>SENHA</label>
+            <div className={styles.passwordGroup}>
+              <p className={styles.value}>{password}</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div>
-        <h2>Dados de Endereço</h2>
+      {/* Endereço de Entrega */}
+      <div className={styles.card}>
+        <div className={styles.cardHeader}>
+          <div className={styles.cardTitleGroup}>
+            <div className={styles.iconWrapperPurple}>
+              <EnvironmentOutlined />
+            </div>
+            <h3 className={styles.cardTitle}>Endereço de Entrega</h3>
+          </div>
+          <button className={styles.editButton}
+          onClick={() => setStepper(1)}
+          >
+            <EditOutlined />
+          </button>
+        </div>
 
-        <h2>Rua/lagradouro</h2>
-        <p>{address}</p>
-
-        <h2>Número</h2>
-        <p>{number}</p>
-
-        <h2>Complemento</h2>
-        <p>{complement}</p>
-
-        <h2>Bairro</h2>
-        <p>{district}</p>
-
-        <h2>Cidade</h2>
-        <p>{city}</p>
-
-        <h2>Estado</h2>
-        <p>{state}</p>
-
-        <h2>CEP</h2>
-        <p>{cep}</p>
-
-        <button>Editar</button>
+        <div className={styles.addressContent}>
+          <p className={styles.addressMain}>
+            {address}, {number}
+          </p>
+          <p className={styles.addressSub}>
+            {district} - {city}
+          </p>
+          <p className={styles.addressSub}>
+            {state} - BR
+          </p>
+          <span className={styles.cepTag}>CEP {cep}</span>
+        </div>
       </div>
 
-      <button onClick={handleUser}>Cadastrar</button>
+      <div className={styles.footer}>
+        <button className={styles.confirmButton} onClick={handleUser}>
+          Finalizar Cadastro
+        </button>
+      </div>
     </div>
   );
 }

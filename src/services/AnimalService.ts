@@ -52,44 +52,48 @@ class AnimalService {
     const request = await axios.get(`${url}/animal/get`, {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("token")
-      }
-    })
+        Authorization:
+          typeof window !== "undefined" ? localStorage.getItem("token") : "",
+      },
+    });
 
-    return request
+    return request;
   }
 
   static async getAnimal(uuid: string) {
     const request = await axios.get(`${url}/animal/get/${uuid}`, {
       headers: {
-       "Content-Type": "application/json",
-      "Authorization": localStorage.getItem("token")
-      }
-    })
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
 
     return request;
-
   }
 
   static async getAnimalByShelter(uuid: string) {
     const request = await axios.get(`${url}/animal/getByShelter/${uuid}`, {
       headers: {
-        "Authorization": localStorage.getItem("token")
-      }
-    })
+        Authorization: localStorage.getItem("token"),
+      },
+    });
 
-    return request
+    return request;
   }
 
   static async editAnimal(uuid: string, data: any) {
-    const response = await axios.put(`${url}/animal/${uuid}`, {
-      data
-    }, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("token")
+    const response = await axios.put(
+      `${url}/animal/${uuid}`,
+      {
+        data,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
       }
-    })
+    );
 
     return response;
   }
@@ -98,11 +102,11 @@ class AnimalService {
     const response = await axios.delete(`${url}/animal/${uuid}`, {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("token"),
-      }
-    })
-    
-    return response
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    return response;
   }
 }
 

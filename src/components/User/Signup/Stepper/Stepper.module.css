@@ -33,14 +33,14 @@
 
 .container-register-1 {
   width: 590px;
-  height: 740px;
+  height: 710px;
   animation: transition-1 0.2s ease forwards;
 }
 
 @keyframes transition-1 {
   100% {
     width: 590px;
-    height: 740px;
+    height: 710px;
   }
   0% {
     width: 550px;
@@ -50,14 +50,14 @@
 
 .container-register-2 {
   width: 500px;
-  height: 600px;
+  height: 55vh;
   animation: transition-2 0.2s ease forwards;
 }
 
 @keyframes transition-2 {
   100% {
     width: 500px;
-    height: 600px;
+    height: 55vh;
   }
   0% {
     width: 590px;
@@ -85,7 +85,7 @@
 
 .back-button {
   opacity: 0.7;
-  margin-top: 10vh;
+  margin-top: 7vh;
   position: absolute;
   top: 0;
   left: 20px;

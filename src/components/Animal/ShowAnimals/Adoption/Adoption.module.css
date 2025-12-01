@@ -1,0 +1,24 @@
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10vh;
+}
+
+.animal-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.age-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.age {
+    margin-left: 1vw;
+}
