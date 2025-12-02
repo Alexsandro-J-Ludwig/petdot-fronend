@@ -1,0 +1,131 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 50vh;
+  background-color: #f5f5f5;
+  padding: 4rem 2rem;
+  border-radius: 12px;
+}
+
+.mainCard {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  min-height: 600px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.sidebar {
+  width: 280px;
+  background-color: #fcfcfc;
+  border-right: 1px solid #eaeaea;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentArea {
+  flex: 1;
+  padding: 3rem 4rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Stepper Styles */
+.stepItem {
+  display: flex;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.stepItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 19px;
+  /* Center of the circle (40px / 2 - 1px) */
+  top: 40px;
+  bottom: -10px;
+  width: 2px;
+  background-color: #eaeaea;
+}
+
+.stepIconWrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #eaeaea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  color: #999;
+  background: white;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stepTitle {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 0.2rem;
+}
+
+.stepDescription {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+/* Active State */
+.active .stepIconWrapper {
+  border-color: #5d4037;
+  background-color: #5d4037;
+  color: white;
+}
+
+.active .stepTitle {
+  color: #5d4037;
+}
+
+/* Completed State */
+.completed .stepIconWrapper {
+  border-color: #5d4037;
+  color: #5d4037;
+}
+
+/* Button Container */
+.button-container {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 2rem;
+}
+
+.back-button {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.back-button:hover {
+  background: #f5f5f5;
+  color: #333;
+}

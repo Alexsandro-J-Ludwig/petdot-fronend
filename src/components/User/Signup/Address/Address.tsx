@@ -2,7 +2,7 @@ import styles from "./Address.module.css";
 import Select from "./select/Select";
 import { useAddress } from "../Contexts/AddressContext";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { triggerSnackbar } from "@/components/Error/Error";
+import { triggerSnackbar } from "@/components/Recicle/Error/Error";
 
 type Props = {
   setStepper: React.Dispatch<React.SetStateAction<number>>;

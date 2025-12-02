@@ -1,7 +1,7 @@
 import styles from "./Signup.module.css";
 import { useUser } from "../Contexts/UserContext,";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { triggerSnackbar } from "@/components/Error/Error";
+import { triggerSnackbar } from "@/components/Recicle/Error/Error";
 
 type Props = {
   setStepper: React.Dispatch<React.SetStateAction<number>>;

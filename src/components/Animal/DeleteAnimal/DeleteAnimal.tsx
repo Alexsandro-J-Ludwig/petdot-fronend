@@ -2,14 +2,10 @@ import { useEffect, useState } from "react";
 import ShelterService from "../../../services/ShelterService";
 import AnimalService from "../../../services/AnimalService";
 import Confirm from "./Confirm/Confirm";
+import styles from "./DeleteAnimal.module.css";
+import { SearchOutlined, WarningOutlined } from "@ant-design/icons";
 
-type AddShelterProps = {
-  open: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-};
-
-function DeleteAnimal({ open, onOpen, onClose }: AddShelterProps) {
+function DeleteAnimal() {
   const [shelters, setShelters] = useState(
     [] as { uuid: string; name: string }[]
   );
@@ -24,21 +20,20 @@ function DeleteAnimal({ open, onOpen, onClose }: AddShelterProps) {
   const getAllShelter = async () => {
     const uuid = localStorage.getItem("token") || "";
     const response = await ShelterService.getAllShelter(uuid);
-    
+
     if (response.data) {
-      // transforma a resposta em um array novo
       const lista = response.data.data.map((item: any) => ({
         uuid: item.uuid,
         name: item.name,
       }));
 
-      setShelters(lista); // apenas um set, limpo e elegante
+      setShelters(lista);
     }
   };
 
   const getAnimalByShelter = async (value: string) => {
     const response = await AnimalService.getAnimalByShelter(value);
-    
+
     if (response.status === 200) {
       const lista = response.data.map((item: any) => ({
         uuid: item.data.uuid,
@@ -51,25 +46,22 @@ function DeleteAnimal({ open, onOpen, onClose }: AddShelterProps) {
   };
 
   return (
-    <>
-      <button
-        onClick={() => {
-          onOpen();
-          getAllShelter();
-        }}
-      >
-        Deletar
-      </button>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h2 className={styles.title}>Deletar Animal</h2>
 
-      {open && (
-        <div>
-          <h1>Deletar Animal</h1>
+        <div className={styles.warningText}>
+          <WarningOutlined /> Cuidado: Esta ação removerá permanentemente o animal.
+        </div>
 
-          <div>
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Selecionar Abrigo</label>
+          <div className={styles.inputWrapper}>
+            <SearchOutlined className={styles.icon} />
             <select
+              className={`${styles.field} ${styles.select}`}
               onChange={(e) => {
                 const value = e.target.value;
-
                 if (value) {
                   getAnimalByShelter(value);
                 }
@@ -83,17 +75,21 @@ function DeleteAnimal({ open, onOpen, onClose }: AddShelterProps) {
               ))}
             </select>
           </div>
-
-          <div>
-            {animals.map((item: any, index: number) => (
-              <div key={index}>
-                <Confirm uuid={item.uuid} name={item.name} imageURL={item.imageURL}/>
-              </div>
-            ))}
-          </div>
         </div>
-      )}
-    </>
+
+        <div className={styles.animalList}>
+          {animals.map((item: any, index: number) => (
+            <div key={index}>
+              <Confirm
+                uuid={item.uuid}
+                name={item.name}
+                imageURL={item.imageURL}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 

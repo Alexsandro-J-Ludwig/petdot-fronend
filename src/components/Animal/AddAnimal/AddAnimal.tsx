@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import Select from "./Select/Select";
 import styles from "./AddAnimal.module.css";
-import Nav from "../../Recicle/Nav/Nav";
 import AnimalService from "../../../services/AnimalService";
 import ShelterService from "../../../services/ShelterService";
+import {
+  PlusOutlined,
+  UploadOutlined,
+  UserOutlined,
+  CalendarOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 
-type AddShelterProps = {
-  open: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-};
-
-function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
+function AddAnimal() {
   const [files, setFiles] = useState<FileList | null>(null);
 
   const [name, setname] = useState("");
@@ -26,7 +26,6 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
     [] as { uuid: string; name: string }[]
   );
 
-  //UseEffect para pegar todos os abrigos
   useEffect(() => {
     getAllShelter();
   }, []);
@@ -36,19 +35,17 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
     const response = await ShelterService.getAllShelter(uuid);
 
     if (response.data) {
-      // transforma a resposta em um array novo
       const lista = response.data.data.map((item: any) => ({
         uuid: item.uuid,
         name: item.name,
       }));
 
-      setShelters(lista); // apenas um set, limpo e elegante
+      setShelters(lista);
     }
   };
 
   const getURL = async (f: File) => {
     const extension = f.type;
-
     const TYPES_ACCEPTED = ["image/png", "image/jpeg", "image/jpg"];
 
     if (extension && TYPES_ACCEPTED.includes(extension)) {
@@ -58,16 +55,12 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
       });
 
       if (response.data) {
-        console.log(response.data);
-
         const request = await AnimalService.sendImage(
           response.data.data.uploadURL,
           f
         );
 
         if (request === 200) {
-          console.log("sucesso em enviar imagem");
-
           return response.data.data.publicURL;
         }
       }
@@ -76,8 +69,6 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
     alert("Formato de imagem não suportado");
     return false;
   };
-
-  //Pegar a url de imagem para salvar e guardar a url public de imagem
 
   const addAnimal = async (url: string) => {
     const response = await AnimalService.addAnimal({
@@ -101,7 +92,6 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
     if (files && files.length > 0) {
       url = await getURL(files[0]);
     } else {
-      // Se a URL não foi obtida, para a execução, pois o alert já foi chamado no getURL
       return;
     }
 
@@ -109,27 +99,20 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
   };
 
   return (
-    <>
-      <Nav />
-      <button
-        onClick={() => {
-          onOpen();
-          getAllShelter();
-        }}
-      >
-        Adicionar
-      </button>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h2 className={styles.title}>Adicionar Animal</h2>
 
-      {open && (
-        <div>
-          <h1>Adicionar Animal</h1>
-
-          <div>
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Abrigo</label>
+          <div className={styles.inputWrapper}>
+            <SearchOutlined className={styles.icon} />
             <select
-              className={styles["field"]}
+              className={`${styles.field} ${styles.select}`}
               onChange={(e) => {
                 setShelterUUID(e.target.value);
               }}
+              value={shelterUUID}
             >
               <option value="">Selecione um abrigo</option>
               {shelters.map((item: any, index: number) => (
@@ -139,71 +122,116 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
               ))}
             </select>
           </div>
-
-          <div>
-            {files && <img src={URL.createObjectURL(files[0])} alt="preview" />}
-            {!files && (
-              <input
-                className={styles["image-input"]}
-                type="file"
-                onChange={(e) => {
-                  const f = e.target.files;
-                  setFiles(f);
-                }}
-              />
-            )}
-          </div>
-          <input
-            placeholder="Nome"
-            onChange={(e) => {
-              setname(e.target.value);
-            }}
-          />
-          <input
-            placeholder="Nascimento"
-            type="date"
-            onChange={(e) => {
-              setbirth(e.target.value);
-            }}
-          />
-
-          <select
-            onChange={(e) => {
-              setspecies(e.target.value);
-            }}
-          >
-            <option value="">Espécie</option>
-            <option value="Cachorro">Cachorro</option>
-            <option value="Gato">Gato</option>
-            <option value="Pássaro">Pássaro</option>
-            <option value="Coelho">Coelho</option>
-          </select>
-          <input
-            placeholder="Raça"
-            onChange={(e) => {
-              setbreed(e.target.value);
-            }}
-          />
-          <select
-            onChange={(e) => {
-              setgender(e.target.value);
-            }}
-          >
-            <option value="">Gênero</option>
-            <option value="male">Macho</option>
-            <option value="female">Fêmea</option>
-          </select>
-
-          <Select
-            species={species}
-            vacines={vaccines}
-            setVacines={setVacines}
-          />
-
-          <button onClick={handleClick}>Cadastrar Animal</button>
         </div>
-      )}
-    </>
+
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Foto do Animal</label>
+          {files && (
+            <img
+              src={URL.createObjectURL(files[0])}
+              alt="preview"
+              className={styles.imagePreview}
+            />
+          )}
+          <label className={styles.fileInputLabel}>
+            <input
+              type="file"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                const f = e.target.files;
+                setFiles(f);
+              }}
+            />
+            <UploadOutlined style={{ marginRight: "0.5rem" }} />
+            {files ? "Trocar Imagem" : "Escolher Imagem"}
+          </label>
+        </div>
+
+        <div className={styles.row}>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Nome</label>
+            <div className={styles.inputWrapper}>
+              <UserOutlined className={styles.icon} />
+              <input
+                placeholder="Nome do Animal"
+                className={styles.field}
+                value={name}
+                onChange={(e) => setname(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Nascimento</label>
+            <div className={styles.inputWrapper}>
+              <CalendarOutlined className={styles.icon} />
+              <input
+                placeholder="Nascimento"
+                type="date"
+                className={styles.field}
+                onChange={(e) => setbirth(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.row}>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Espécie</label>
+            <div className={styles.inputWrapper}>
+              <select
+                className={`${styles.field} ${styles.select}`}
+                onChange={(e) => setspecies(e.target.value)}
+                value={species}
+              >
+                <option value="">Selecione</option>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+                <option value="Pássaro">Pássaro</option>
+                <option value="Coelho">Coelho</option>
+              </select>
+            </div>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Raça</label>
+            <div className={styles.inputWrapper}>
+              <input
+                placeholder="Raça"
+                className={styles.field}
+                value={breed}
+                onChange={(e) => setbreed(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Gênero</label>
+            <div className={styles.inputWrapper}>
+              <select
+                className={`${styles.field} ${styles.select}`}
+                onChange={(e) => setgender(e.target.value)}
+                value={gender}
+              >
+                <option value="">Selecione</option>
+                <option value="male">Macho</option>
+                <option value="female">Fêmea</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <Select
+          species={species}
+          vacines={vaccines}
+          setVacines={setVacines}
+        />
+
+        <button className={styles.button} onClick={handleClick}>
+          Cadastrar Animal <PlusOutlined />
+        </button>
+      </div>
+    </div>
   );
 }
 

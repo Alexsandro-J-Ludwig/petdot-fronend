@@ -1,5 +1,5 @@
 .footer {
-  position: sticky;
+  position: fixed; /* fixa o rodapé na tela */
   bottom: 0; /* cola no fundo */
   left: 0;
   width: 100%;

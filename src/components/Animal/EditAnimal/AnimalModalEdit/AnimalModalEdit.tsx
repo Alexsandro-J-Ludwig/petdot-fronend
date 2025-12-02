@@ -3,6 +3,13 @@ import { useState } from "react";
 import styles from "./AnimalModalEdit.module.css";
 import Select from "../../AddAnimal/Select/Select";
 import AnimalService from "../../../../services/AnimalService";
+import {
+  EditOutlined,
+  UserOutlined,
+  CalendarOutlined,
+  UploadOutlined,
+  SaveOutlined,
+} from "@ant-design/icons";
 
 type Props = {
   uuid: string;
@@ -18,17 +25,16 @@ function AnimalModalEdit({ uuid, name, imageURL, birth, disponible }: Props) {
   const handleClose = () => setOpen(false);
   const [files, setFiles] = useState<FileList | null>(null);
 
-  const [names, setname] = useState("");
-  const [births, setbirth] = useState("");
+  const [names, setname] = useState(name);
+  const [births, setbirth] = useState(birth);
   const [species, setspecies] = useState("");
   const [breed, setbreed] = useState("");
   const [gender, setgender] = useState("");
   const [vaccines, setVacines] = useState<string[]>([]);
-  const [imageURLs, setImageURL] = useState();
+  const [imageURLs, setImageURL] = useState(imageURL);
 
-   const getURL = async (f: File) => {
+  const getURL = async (f: File) => {
     const extension = f.type;
-
     const TYPES_ACCEPTED = ["image/png", "image/jpeg", "image/jpg"];
 
     if (extension && TYPES_ACCEPTED.includes(extension)) {
@@ -39,16 +45,13 @@ function AnimalModalEdit({ uuid, name, imageURL, birth, disponible }: Props) {
 
       if (response.data) {
         const request = await AnimalService.sendImage(
-          response.data.uploadURL,
+          response.data.data.uploadURL,
           f
         );
 
         if (request === 200) {
-          console.log("sucesso em enviar imagem");
-
-          setImageURL(response.data.publicURL);
-
-          return true;  
+          setImageURL(response.data.data.publicURL);
+          return true;
         }
       }
     }
@@ -69,78 +72,132 @@ function AnimalModalEdit({ uuid, name, imageURL, birth, disponible }: Props) {
     });
 
     if (response.status === 200) {
-        alert("Animal atualizado com sucesso!")
+      alert("Animal atualizado com sucesso!");
+      handleClose();
     }
   };
 
   return (
     <>
-      <button onClick={handleOpen}>
-        <img src={imageURL} alt="preview" />
-        {name}
-        {birth}
-        {disponible}
+      <button className={styles.triggerButton} onClick={handleOpen}>
+        <img src={imageURL} alt={name} className={styles.animalImage} />
+        <div className={styles.animalInfo}>
+          <span className={styles.animalName}>{name}</span>
+          <span className={styles.animalDetails}>
+            {birth} • {disponible ? "Disponível" : "Indisponível"}
+          </span>
+        </div>
+        <EditOutlined style={{ marginLeft: "auto", color: "#5d4037" }} />
       </button>
 
       <Modal open={open} onClose={handleClose}>
-        <div>
-          <div>
-            {files && <img src={URL.createObjectURL(files[0])} alt="preview" />}
-            {!files && (
+        <div className={styles.modalContent}>
+          <h2 className={styles.title}>Editar {name}</h2>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Foto do Animal</label>
+            {files ? (
+              <img
+                src={URL.createObjectURL(files[0])}
+                alt="preview"
+                className={styles.imagePreview}
+              />
+            ) : (
+              <img src={imageURLs} alt="current" className={styles.imagePreview} />
+            )}
+            <label className={styles.fileInputLabel}>
               <input
-                className={styles["image-input"]}
                 type="file"
-                onChange={(e) => {
+                style={{ display: "none" }}
+                onChange={async (e) => {
                   const f = e.target.files;
-                  setFiles(f);
+                  if (f && f.length > 0) {
+                    setFiles(f);
+                    await getURL(f[0]);
+                  }
                 }}
               />
-            )}
+              <UploadOutlined style={{ marginRight: "0.5rem" }} />
+              Trocar Imagem
+            </label>
           </div>
-          <input
-            placeholder="Nome"
-            onChange={(e) => {
-              setname(e.target.value);
-            }}
-          />
-          <input
-            placeholder="Nascimento"
-            type="date"
-            onChange={(e) => {
-              setbirth(e.target.value);
-            }}
-          />
 
-          <select
-            onChange={(e) => {
-              setspecies(e.target.value);
-            }}
-          >
-            <option value="">Espécie</option>
-            <option value="Cachorro">Cachorro</option>
-            <option value="Gato">Gato</option>
-            <option value="Pássaro">Pássaro</option>
-            <option value="Coelho">Coelho</option>
-          </select>
-          <input
-            placeholder="Raça"
-            onChange={(e) => {
-              setbreed(e.target.value);
-            }}
-          />
-          <select
-            onChange={(e) => {
-              setgender(e.target.value);
-            }}
-          >
-            <option value="">Gênero</option>
-            <option value="male">Macho</option>
-            <option value="female">Fêmea</option>
-          </select>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Nome</label>
+            <div className={styles.inputWrapper}>
+              <UserOutlined className={styles.icon} />
+              <input
+                placeholder="Nome"
+                className={styles.field}
+                value={names}
+                onChange={(e) => setname(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Nascimento</label>
+            <div className={styles.inputWrapper}>
+              <CalendarOutlined className={styles.icon} />
+              <input
+                placeholder="Nascimento"
+                type="date"
+                className={styles.field}
+                value={births}
+                onChange={(e) => setbirth(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Espécie</label>
+            <div className={styles.inputWrapper}>
+              <select
+                className={`${styles.field} ${styles.select}`}
+                onChange={(e) => setspecies(e.target.value)}
+                value={species}
+              >
+                <option value="">Selecione</option>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+                <option value="Pássaro">Pássaro</option>
+                <option value="Coelho">Coelho</option>
+              </select>
+            </div>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Raça</label>
+            <div className={styles.inputWrapper}>
+              <input
+                placeholder="Raça"
+                className={styles.field}
+                value={breed}
+                onChange={(e) => setbreed(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Gênero</label>
+            <div className={styles.inputWrapper}>
+              <select
+                className={`${styles.field} ${styles.select}`}
+                onChange={(e) => setgender(e.target.value)}
+                value={gender}
+              >
+                <option value="">Selecione</option>
+                <option value="male">Macho</option>
+                <option value="female">Fêmea</option>
+              </select>
+            </div>
+          </div>
 
           <Select species={species} vacines={vaccines} setVacines={setVacines} />
 
-          <button onClick={handleUpdate}>Atualiaar Animal</button>
+          <button className={styles.button} onClick={handleUpdate}>
+            Salvar Alterações <SaveOutlined />
+          </button>
         </div>
       </Modal>
     </>

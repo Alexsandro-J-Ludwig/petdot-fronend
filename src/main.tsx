@@ -6,7 +6,7 @@ import Lobby from "./pages/Lobby/Lobby";
 import Menu from "./pages/Menu/Menu";
 import Shelter from "./pages/Shelter/Shelter";
 import Animal from "./pages/Animal/Animal";
-import GlobalSnackbar from "./components/Error/Error";
+import GlobalSnackbar from "./components/Recicle/Error/Error";
 
 const router = createBrowserRouter([
   {

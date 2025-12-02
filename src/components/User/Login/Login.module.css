@@ -1,7 +1,7 @@
 .container-login {
   background-color: rgb(184, 163, 149);
-  width: 500px;
-  height: 500px;
+  width: 450px;
+  height: 360px;
   padding: 40px;
   border-radius: 30px;
   position: absolute;  /* posição absoluta */
@@ -45,9 +45,11 @@
 }
 
 .button {
-  width: 200px;
-  height: 40px;
-  border-radius: 10px;
+  margin: 20px;
+  width: 150px;
+  height: 45px;
+  font-size: 15px;
+  border-radius: 14px;
   margin-top: 20px;
   background-color: #5d4037;
   color: white;
@@ -56,6 +58,11 @@
   box-shadow: 0 4px 8px rgba(93, 64, 55, 0.4);
   font-weight: bold;
 }
+
+.button:hover {
+  background-color: #412d27;
+}
+
 
 .button:hover {
     background-color: #412d27;

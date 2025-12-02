@@ -1,0 +1,12 @@
+.field {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  transition: all 0.2s;
+}
+
+.field:focus {
+  outline: none;
+}

@@ -1,6 +1,8 @@
 import { Modal } from "@mui/material";
 import { useState } from "react";
 import AnimalService from "../../../../services/AnimalService";
+import styles from "./Confirm.module.css";
+import { DeleteOutlined } from "@ant-design/icons";
 
 type Props = {
   uuid: string;
@@ -23,33 +25,44 @@ function Confirm({ uuid, name, imageURL }: Props) {
 
       if (response.status == 200) {
         alert("Animal deletado!");
-        window.location.reload
+        window.location.reload();
       }
     } else {
-        alert("Frase incorreta")
+      alert("Frase incorreta");
     }
   };
 
   return (
     <>
-      <button onClick={handleOpen}>
-        <img src={imageURL} alt="preview" />
-        {name}
+      <button className={styles.triggerButton} onClick={handleOpen}>
+        <img src={imageURL} alt={name} className={styles.animalImage} />
+        <div className={styles.animalInfo}>
+          <span className={styles.animalName}>{name}</span>
+        </div>
+        <DeleteOutlined style={{ marginLeft: "auto", color: "#d32f2f" }} />
       </button>
 
       <Modal open={open} onClose={handleClose}>
-        <div>
-          <label>
-            Digite "{confirm}" para confirmar
-            <input
-              onChange={(e) => {
-                const valor = e.target.value;
-                setValor(valor);
-              }}
-            />
+        <div className={styles.modalContent}>
+          <h2 className={styles.title}>Confirmar Exclusão</h2>
+
+          <label className={styles.label}>
+            Digite <strong>"{confirm}"</strong> para confirmar
+            <div className={styles.inputWrapper}>
+              <input
+                className={styles.field}
+                onChange={(e) => {
+                  const valor = e.target.value;
+                  setValor(valor);
+                }}
+                placeholder={`Digite "${confirm}"`}
+              />
+            </div>
           </label>
 
-          <button onClick={deletar}>Deletar</button>
+          <button className={styles.button} onClick={deletar}>
+            Deletar Permanentemente <DeleteOutlined />
+          </button>
         </div>
       </Modal>
     </>

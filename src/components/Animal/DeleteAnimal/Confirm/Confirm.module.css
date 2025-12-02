@@ -1,0 +1,116 @@
+.triggerButton {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.triggerButton:hover {
+    border-color: #d32f2f;
+    box-shadow: 0 2px 8px rgba(211, 47, 47, 0.1);
+}
+
+.animalImage {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eee;
+}
+
+.animalInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.animalName {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.modalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #d32f2f;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 0.5rem;
+}
+
+.label {
+    font-size: 1rem;
+    color: #555;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    transition: all 0.2s;
+    background: white;
+}
+
+.inputWrapper:focus-within {
+    border-color: #d32f2f;
+    box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.1);
+}
+
+.field {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+    color: #333;
+    background: transparent;
+}
+
+.button {
+    margin-top: 1rem;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.button:hover {
+    background-color: #b71c1c;
+}

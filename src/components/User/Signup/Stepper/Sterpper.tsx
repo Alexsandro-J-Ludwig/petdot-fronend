@@ -60,21 +60,21 @@ function Register() {
                 />
               </div>
 
-              {step === 0 && <Signup setStepper={setStep}/>}
-              {step === 1 && <Address setStepper={setStep}/>}
-              {step === 2 && <RegisterContent setStepper={setStep}/>}
+              <div className={styles["stepper-content"]}>
+                {step === 0 && <Signup setStepper={setStep} />}
+                {step === 1 && <Address setStepper={setStep} />}
+                {step === 2 && <RegisterContent setStepper={setStep} />}
 
-              <div className={styles["button-container"]}>
-                {step > 0 && (
-                  <button
-                    className={styles["back-button"]}
-                    onClick={() => setStep(step - 1)}
-                  >
-                    <ArrowLeftOutlined />
-                  </button>
-                )}
-
-              
+                <div className={styles["button-container"]}>
+                  {step > 0 && (
+                    <button
+                      className={styles["back-button"]}
+                      onClick={() => setStep(step - 1)}
+                    >
+                      <ArrowLeftOutlined />
+                    </button>
+                  )}
+                </div>
               </div>
             </AddressContext>
           </UserContext>

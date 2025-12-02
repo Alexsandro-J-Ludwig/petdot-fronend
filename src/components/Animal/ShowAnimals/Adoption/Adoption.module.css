@@ -4,9 +4,21 @@
   justify-content: center;
   gap: 20px;
   margin-top: 10vh;
+  animation: render 0.5s ease-in-out;
 }
 
 .animal-card {
+  transform: translateY(10px);
+  transform: translateX(20px);
+  transition: 0.4s ease;
+  opacity: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.048);
+}
+
+.cardsContainerShow {
+  opacity: 1;
+  transform: translateY(0);
+  transform: translateX(0);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -14,130 +26,72 @@
   justify-content: center;
 }
 
+@keyframes render {
+  100% {
+    opacity: 1;
+  }
+  0% {
+    opacity: 0;
+  }
+}
+
 .navbar {
+  background-color: rgb(233, 233, 233);
+  border-radius: 10px;
+  height: 70px;
+  width: 33vw;
+  margin-top: 13px;
+  position: absolute;
   display: flex;
   flex-direction: row;
+  margin-left: 50px;
 }
 
 .search {
-  margin-left: 10px;
+  margin-left: 40px;
   margin-top: 20px;
-  transition: box-shadow 0.35s ease-in-out;
   font-size: 15px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  color: #9b9b9b;
-  border: none;
   text-align: center;
   width: 400px;
-  height: 30px;
-  border-radius: 100px;
-  background: #e0e0e0;
-  box-shadow: inset 1px 1px 3px rgba(136, 165, 191, 0.48),
-    inset -1px -1px 3px #ffffff;
+  height: 27px;
+  border-radius: 10px;
+  border: 1px solid #5d4037;
 }
 .search:focus {
   transition: all 0.2s ease-in-out;
-  outline: none;
-  box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48),
-    inset -3px -3px 7px #ffffff;
-}
-.search:hover {
-  transition: all 0.2s ease-in-out;
-  outline: none;
-  box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48),
-    inset -3px -3px 7px #ffffff;
-}
-.search:valid {
-  transition: all 0.2s ease-in-out;
-  outline: none;
-  box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48),
-    inset -3px -3px 7px #ffffff;
-}
-.search::placeholder {
-  color: inherit;
-}
-
-.search:focus {
   outline: none;
 }
 
 .select-species {
+  border: 1px solid #5d4037;
   margin-right: 10px;
-  margin-left: 70px;
+  margin-left: 10px;
   margin-top: 20px;
-  transition: box-shadow 0.35s ease-in-out;
   font-size: 15px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
   color: #9b9b9b;
-  border: none;
   text-align: center;
   width: 100px;
   height: 30px;
-  border-radius: 100px;
-  background: #e0e0e0;
-  box-shadow: inset 1px 1px 3px rgba(136, 165, 191, 0.48),
-    inset -1px -1px 3px #ffffff;
+  border-radius: 10px;
 }
 .select-species:focus {
   transition: all 0.2s ease-in-out;
   outline: none;
-  box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48),
-    inset -3px -3px 7px #ffffff;
-}
-.select-species:hover {
-  transition: all 0.2s ease-in-out;
-  outline: none;
-  box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48),
-    inset -3px -3px 7px #ffffff;
-}
-.select-species:valid {
-  transition: all 0.2s ease-in-out;
-  outline: none;
-  box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48),
-    inset -3px -3px 7px #ffffff;
-}
-.select-species::placeholder {
-  color: inherit;
 }
 
 .select-disponible {
+  border: 1px solid #5d4037;
   margin-top: 20px;
-  transition: box-shadow 0.35s ease-in-out;
   font-size: 15px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
   color: #9b9b9b;
-  border: none;
   text-align: center;
   width: 100px;
   height: 30px;
-  border-radius: 100px;
-  background: #e0e0e0;
-  box-shadow: inset 1px 1px 3px rgba(136, 165, 191, 0.48),
-    inset -1px -1px 3px #ffffff;
+  border-radius: 10px;
 }
 .select-disponible:focus {
   transition: all 0.2s ease-in-out;
   outline: none;
-  box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48),
-    inset -3px -3px 7px #ffffff;
-}
-.select-disponible:hover {
-  transition: all 0.2s ease-in-out;
-  outline: none;
-  box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48),
-    inset -3px -3px 7px #ffffff;
-}
-.select-disponible:valid {
-  transition: all 0.2s ease-in-out;
-  outline: none;
-  box-shadow: inset 3px 3px 7px rgba(136, 165, 191, 0.48),
-    inset -3px -3px 7px #ffffff;
-}
-.select-disponible::placeholder {
-  color: inherit;
 }
 
 .age-container {
@@ -233,4 +187,23 @@
 
 .confirmButton:hover {
   background-color: #926456;
+}
+
+.adopt-button {
+  color: #ffffff;
+  transition: 0.3s all;
+  width: 5vw;
+  height: 3vh;
+  background-color: #5d4037;
+  border-radius: 10px;
+  border: 1px solid #5d4037;
+  font-weight: 600;
+  cursor: pointer;
+  margin: auto;
+}
+
+.adopt-button:hover {
+  background-color: #30201c;
+  border: 1px solid #5d4037;
+  cursor: pointer;
 }

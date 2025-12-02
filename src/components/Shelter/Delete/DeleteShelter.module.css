@@ -1,0 +1,109 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 2rem;
+}
+
+.card {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 0.8rem 1rem;
+    transition: all 0.2s;
+    background: white;
+}
+
+.inputWrapper:focus-within {
+    border-color: #d32f2f;
+    /* Red for delete action warning */
+    box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.1);
+}
+
+.icon {
+    color: #999;
+    margin-right: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.field {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+    color: #333;
+    background: transparent;
+}
+
+.select {
+    appearance: none;
+    cursor: pointer;
+}
+
+.button {
+    margin-top: 1rem;
+    background-color: #d32f2f;
+    /* Red for delete */
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.button:hover {
+    background-color: #b71c1c;
+}
+
+.warningText {
+    color: #666;
+    font-size: 0.9rem;
+    background-color: #fff4f4;
+    padding: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ffcdd2;
+}

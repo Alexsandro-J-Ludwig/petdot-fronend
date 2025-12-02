@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import ShelterService from "../../../services/ShelterService";
 import styles from "./EditShelter.module.css";
+import {
+  ShopOutlined,
+  FileTextOutlined,
+  PhoneOutlined,
+  MailOutlined,
+  SaveOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 
-type AddShelterProps = {
-  open: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-};
-
-function EditShelter({ open, onOpen, onClose }: AddShelterProps) {
+function EditShelter() {
   const [name, setName] = useState("");
   const [cnpj, setCnpj] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,25 +22,24 @@ function EditShelter({ open, onOpen, onClose }: AddShelterProps) {
   );
 
   useEffect(() => {
-    getAllShelter()
-  }, [])
+    getAllShelter();
+  }, []);
 
   const getAllShelter = async () => {
     const uuid = localStorage.getItem("token") || "";
-    const response = await ShelterService.getAllShelter(uuid);     
+    const response = await ShelterService.getAllShelter(uuid);
 
     if (response.data) {
-      // transforma a resposta em um array novo
       const lista = response.data.data.map((item: any) => ({
         uuid: item.uuid,
         name: item.name,
       }));
 
-      setShelters(lista); // apenas um set, limpo e elegante
+      setShelters(lista);
     }
   };
 
-  const handleEdit = async () => {    
+  const handleEdit = async () => {
     const response = await ShelterService.editShelter(uuid, {
       name: name,
       cnpj: cnpj,
@@ -54,53 +55,88 @@ function EditShelter({ open, onOpen, onClose }: AddShelterProps) {
   };
 
   return (
-    <>
-      <button onClick={() => { onOpen(); getAllShelter(); }}>Editar Abrigo</button>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h2 className={styles.title}>Editar Abrigo</h2>
 
-      {open && (
-        <div>
-          <div>
-            <select 
-            className={styles["field"]}
-            onChange={(e) => {
-              setUuid(e.target.value)
-            }}>
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Selecionar Abrigo</label>
+          <div className={styles.inputWrapper}>
+            <SearchOutlined className={styles.icon} />
+            <select
+              className={`${styles.field} ${styles.select}`}
+              onChange={(e) => {
+                setUuid(e.target.value);
+              }}
+              value={uuid}
+            >
               <option value="">Selecione um abrigo</option>
               {shelters.map((item: any, index: number) => (
-                <option key={index} value={item.uuid}>{item.name}</option>
+                <option key={index} value={item.uuid}>
+                  {item.name}
+                </option>
               ))}
             </select>
           </div>
-
-          <input
-            placeholder="Nome Fantasia"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-          <input
-            placeholder="CNPJ"
-            onChange={(e) => {
-              setCnpj(e.target.value);
-            }}
-          />
-          <input
-            placeholder="Celular"
-            onChange={(e) => {
-              setPhone(e.target.value);
-            }}
-          />
-          <input
-            placeholder="Email"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          />
-
-          <button onClick={handleEdit}>Salvar</button>
         </div>
-      )}
-    </>
+
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Nome Fantasia</label>
+          <div className={styles.inputWrapper}>
+            <ShopOutlined className={styles.icon} />
+            <input
+              placeholder="Nome Fantasia"
+              className={styles.field}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>CNPJ</label>
+          <div className={styles.inputWrapper}>
+            <FileTextOutlined className={styles.icon} />
+            <input
+              placeholder="CNPJ"
+              className={styles.field}
+              value={cnpj}
+              onChange={(e) => setCnpj(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Celular</label>
+          <div className={styles.inputWrapper}>
+            <PhoneOutlined className={styles.icon} />
+            <input
+              placeholder="Celular"
+              className={styles.field}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Email</label>
+          <div className={styles.inputWrapper}>
+            <MailOutlined className={styles.icon} />
+            <input
+              placeholder="Email"
+              className={styles.field}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <button className={styles.button} onClick={handleEdit}>
+          Salvar Alterações <SaveOutlined />
+        </button>
+      </div>
+    </div>
   );
 }
 

@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 import ShelterService from "../../../services/ShelterService";
 import styles from "./DeleteShelter.module.css";
+import { DeleteOutlined, SearchOutlined, WarningOutlined } from "@ant-design/icons";
 
-type AddShelterProps = {
-  open: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-};
-
-function DeleteShelter({ open, onOpen, onClose }: AddShelterProps) {
+function DeleteShelter() {
   const [uuid, setUuid] = useState("");
 
   const [shelters, setShelters] = useState(
@@ -24,37 +19,50 @@ function DeleteShelter({ open, onOpen, onClose }: AddShelterProps) {
     const response = await ShelterService.getAllShelter(uuid);
 
     if (response.data) {
-      // transforma a resposta em um array novo
       const lista = response.data.data.map((item: any) => ({
         uuid: item.uuid,
         name: item.name,
       }));
 
-      setShelters(lista); // apenas um set, limpo e elegante
+      setShelters(lista);
     }
   };
 
   const handleDelete = async () => {
-    const response = await ShelterService.deleteShelter(uuid);
+    if (!uuid) {
+      alert("Selecione um abrigo para deletar");
+      return;
+    }
 
-    if (response === 200) {
-      alert("Abrigo deletado");
-      window.location.reload
+    if (confirm("Tem certeza que deseja deletar este abrigo? Esta ação não pode ser desfeita.")) {
+      const response = await ShelterService.deleteShelter(uuid);
+
+      if (response === 200) {
+        alert("Abrigo deletado");
+        window.location.reload();
+      }
     }
   };
 
   return (
-    <>
-      <button onClick={onOpen}>Deletar Abrigo</button>
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <h2 className={styles.title}>Deletar Abrigo</h2>
 
-      {open && (
-        <div className={styles["container-delete"]}>
-          <div>
+        <div className={styles.warningText}>
+          <WarningOutlined /> Cuidado: Esta ação removerá permanentemente o abrigo e todos os dados associados.
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label className={styles.label}>Selecionar Abrigo</label>
+          <div className={styles.inputWrapper}>
+            <SearchOutlined className={styles.icon} />
             <select
-              className={styles["field"]}
+              className={`${styles.field} ${styles.select}`}
               onChange={(e) => {
                 setUuid(e.target.value);
               }}
+              value={uuid}
             >
               <option value="">Selecione um abrigo</option>
               {shelters.map((item: any, index: number) => (
@@ -64,13 +72,13 @@ function DeleteShelter({ open, onOpen, onClose }: AddShelterProps) {
               ))}
             </select>
           </div>
-
-          <button className={styles["deletar"]} onClick={handleDelete}>
-            Deletar Abrigo
-          </button>
         </div>
-      )}
-    </>
+
+        <button className={styles.button} onClick={handleDelete}>
+          Deletar Abrigo <DeleteOutlined />
+        </button>
+      </div>
+    </div>
   );
 }
 
