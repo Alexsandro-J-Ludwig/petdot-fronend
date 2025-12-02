@@ -50,14 +50,14 @@
 
 .container-register-2 {
   width: 500px;
-  height: 55vh;
+  height: 73vh;
   animation: transition-2 0.2s ease forwards;
 }
 
 @keyframes transition-2 {
   100% {
     width: 500px;
-    height: 55vh;
+    height: 73vh;
   }
   0% {
     width: 590px;

@@ -21,7 +21,6 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
   const [gender, setgender] = useState("");
   const [vaccines, setVacines] = useState<string[]>([]);
   const [shelterUUID, setShelterUUID] = useState("");
-  const [imageURL, setImageURL] = useState();
 
   const [shelters, setShelters] = useState(
     [] as { uuid: string; name: string }[]
@@ -57,20 +56,19 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
         filename: f.name.split(".")[0],
         type: extension,
       });
-      
-      if (response.data) {;
-         console.log(response.data);
+
+      if (response.data) {
+        console.log(response.data);
+
         const request = await AnimalService.sendImage(
           response.data.data.uploadURL,
           f
         );
 
         if (request === 200) {
-          console.log("sucesso em enviar imagem");  
+          console.log("sucesso em enviar imagem");
 
-          setImageURL(response.data.data.publicURL);
-
-          return true;  
+          return response.data.data.publicURL;
         }
       }
     }
@@ -81,7 +79,7 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
 
   //Pegar a url de imagem para salvar e guardar a url public de imagem
 
-  const addAnimal = async () => {    
+  const addAnimal = async (url: string) => {
     const response = await AnimalService.addAnimal({
       name,
       birth,
@@ -90,7 +88,7 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
       gender,
       vaccines,
       shelterUUID,
-      imageURL,
+      url,
     });
 
     if (response.status == 201) {
@@ -99,10 +97,15 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
   };
 
   const handleClick = async () => {
+    let url = "";
     if (files && files.length > 0) {
-      await getURL(files[0]);
+      url = await getURL(files[0]);
+    } else {
+      // Se a URL não foi obtida, para a execução, pois o alert já foi chamado no getURL
+      return;
     }
-    addAnimal();
+
+    addAnimal(url);
   };
 
   return (
@@ -174,7 +177,6 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
             <option value="Gato">Gato</option>
             <option value="Pássaro">Pássaro</option>
             <option value="Coelho">Coelho</option>
-
           </select>
           <input
             placeholder="Raça"
@@ -192,7 +194,11 @@ function AddAnimal({ open, onOpen, onClose }: AddShelterProps) {
             <option value="female">Fêmea</option>
           </select>
 
-          <Select species={species} vacines={vaccines} setVacines={setVacines} />
+          <Select
+            species={species}
+            vacines={vaccines}
+            setVacines={setVacines}
+          />
 
           <button onClick={handleClick}>Cadastrar Animal</button>
         </div>

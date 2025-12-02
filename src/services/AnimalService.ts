@@ -4,6 +4,7 @@ const url = "https://petdot-backend.onrender.com";
 
 class AnimalService {
   static async addAnimal(data: any) {
+    console.log(data)
     const request = await axios.post(
       `${url}/animal/`,
       {
@@ -15,7 +16,7 @@ class AnimalService {
         vaccines: data.vaccines,
         uuid_shelter: data.shelterUUID,
         description: "",
-        imageURL: data.imageURL,
+        imageURL: data.url,
       },
       {
         headers: {

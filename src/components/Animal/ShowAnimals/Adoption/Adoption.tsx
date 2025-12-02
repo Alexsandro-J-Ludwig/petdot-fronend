@@ -46,7 +46,7 @@ function Adoption() {
   );
 
   const [search, setSearch] = useState("");
-  const [ageFilter, setAgeFilter] = useState("");
+  const [disponibleFilter, setDisponibleFilter] = useState("");
   const [speciesFilter, setSpeciesFilter] = useState("");
 
   const [open, setOpen] = useState(false);
@@ -54,25 +54,59 @@ function Adoption() {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    const handleAnimals = async () => {
-      const response = await AnimalService.getAllAnimals();
+    handleAnimals();
+  }, []);
 
-      if (response.status === 200) {
-        const lista = response.data.map((item: any) => ({
+  const handleAnimals = async () => {
+    const response = await AnimalService.getAllAnimals();
+
+    if (response.status === 200) {
+      const lista = response.data
+        .filter((item: any) => {
+          const matchSearch = item.data.name
+            .toLowerCase()
+            // .includes(search.toLowerCase());
+            .includes(search.toLowerCase());
+
+          if (speciesFilter === "all") {
+            return matchSearch;
+          }
+
+          if (speciesFilter === "dogs") {
+            return matchSearch && item.data.species === "Cachorro";
+          }
+
+          if (speciesFilter === "cats") {
+            return matchSearch && item.data.species === "Gato";
+          }
+
+          if (disponibleFilter === "all") {
+            return matchSearch;
+          }
+
+          if (disponibleFilter === "true") {
+            return matchSearch && item.data.disponible === true;
+          }
+
+          if (disponibleFilter === "false") {
+            return matchSearch && item.data.disponible === false;
+          }
+
+          return matchSearch;
+        })
+        .map((item: any) => ({
           uuid: item.data.uuid,
           name: item.data.name,
           image: item.data.imageURL,
           age: age(item.data.redemption_date),
+          species: item.data.species,
           disponible: item.data.disponible === true ? "Sim" : "Não",
           vaccines: item.data.vaccines,
         }));
 
-        setAnimals(lista);
-      }
-    };
-
-    handleAnimals();
-  }, []);
+      setAnimals(lista);
+    }
+  };
 
   const getAnimal = async (uuid: string) => {
     const response = await AnimalService.getAnimal(uuid);
@@ -129,6 +163,7 @@ function Adoption() {
     if (response.status === 201) {
       alert("Adotou com sucesso!");
       desableAnimal();
+      window.location.reload();
     }
   };
 
@@ -145,32 +180,58 @@ function Adoption() {
   return (
     <>
       <div className={styles["navbar"]}>
-        <select onChange={(e) => setSpeciesFilter(e.target.value)}>
-          <option value="all">Todos os animais</option>
+        <select
+          className={styles["select-species"]}
+          onChange={(e) => {
+            const value = e.target.value;
+            setSpeciesFilter(value);
+            handleAnimals();
+          }}
+        >
+          <option value="all">Todos</option>
           <option value="dogs">Cachorros</option>
           <option value="cats">Gatos</option>
         </select>
 
-        <select >
-          <option value="age">Idade</option>
-          <option value="young">Jovens</option>
-          <option value="adult">Adultos</option>
-          <option value="elderly">Idosos</option>
+        <select
+          onChange={(e) => setDisponibleFilter(e.target.value)}
+          className={styles["select-disponible"]}
+        >
+          <option value="all">Dispinível</option>
+          <option value="true">Sim</option>
+          <option value="false">Não</option>
         </select>
 
         <input
           type="text"
           placeholder="Buscar por nome"
           className={styles["search"]}
+          onChange={(e) => {
+            // const value = e.target.value;
+            // setSearch(value);
+            setSearch(e.target.value);
+          }}
+          onInput={(e) => handleAnimals()}
         />
       </div>
 
       <div className={styles["cardsContainer"]}>
         {animals.map((item: any, indice: number) => (
-          <div key={indice} className={styles["animal-card"]}>
+          <div
+            key={indice}
+            className={
+              item.disponible === "Sim"
+                ? styles["animal-card"]
+                : styles["animal-card-disabled"]
+            }
+          >
             <Card
               hoverable
-              style={{ width: 270, height: 550 }}
+              style={
+                item.disponible === "Sim"
+                  ? { width: 270, height: 550 }
+                  : { backgroundColor: "gray", width: 270, height: 550 }
+              }
               cover={
                 <img
                   draggable={false}
@@ -211,29 +272,45 @@ function Adoption() {
       </div>
 
       <Modal open={open} onClose={handleClose}>
-        <div>
-          <img src={images} alt="preview" />
+        <div className={styles["modal"]}>
+          <div className={styles["modalHeader"]}>
+            <h2 className={styles["modalTitle"]}>{name}</h2>
+          </div>
 
-          <h2>{name}</h2>
+          <img className={styles["preview"]} src={images} alt="preview" />
 
-          <h3>Data de nascimento:</h3>
-          <p>
-            {redemption_date} - {ages}
-          </p>
+          <div className={styles["grid"]}>
+            <div className={styles["fieldGroup"]}>
+              <label className={styles["label"]}>Data de nascimento</label>
+              <p className={styles["value"]}>
+                {redemption_date} - {ages}
+              </p>
+            </div>
 
-          <h3>Especie:</h3>
-          <p>{species}</p>
+            <div className={styles["fieldGroup"]}>
+              <label className={styles["label"]}>Especie</label>
+              <p className={styles["value"]}>{species}</p>
+            </div>
 
-          <h3>Raça:</h3>
-          <p>{breed}</p>
+            <div className={styles["fieldGroup"]}>
+              <label className={styles["label"]}>Raça</label>
+              <p className={styles["value"]}>{breed}</p>
+            </div>
 
-          <h3>Genero:</h3>
-          <p>{gender}</p>
+            <div className={styles["fieldGroup"]}>
+              <label className={styles["label"]}>Genero</label>
+              <p className={styles["value"]}>{gender}</p>
+            </div>
 
-          <h3>Vacinas:</h3>
-          <p>{vaccines.join(", ")}</p>
+            <div className={styles["fieldGroup"]}>
+              <label className={styles["label"]}>Vacinas</label>
+              <p className={styles["value"]}>{vaccines.join(", ")}</p>
+            </div>
+          </div>
 
-          <button onClick={adotar}>Adotar</button>
+          <button className={styles["confirmButton"]} onClick={adotar}>
+            Adotar
+          </button>
         </div>
       </Modal>
     </>
