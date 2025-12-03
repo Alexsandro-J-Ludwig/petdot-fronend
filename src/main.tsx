@@ -7,6 +7,7 @@ import Menu from "./pages/Menu/Menu";
 import Shelter from "./pages/Shelter/Shelter";
 import Animal from "./pages/Animal/Animal";
 import GlobalSnackbar from "./components/Recicle/Error/Error";
+import User from "./pages/User/User";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
     path: "/animal",
     element: <Animal />,
   },
+  {
+    path: "/user",
+    element: <User />,
+  },
 ]);
 
 const rootElement = document.getElementById("root");
@@ -32,7 +37,7 @@ if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
       <RouterProvider router={router} />
-      <GlobalSnackbar/>
+      <GlobalSnackbar />
     </React.StrictMode>
   );
 } else {

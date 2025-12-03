@@ -1,3 +1,4 @@
+import { triggerSnackbar } from "@/components/Recicle/Error/Error";
 import axios from "axios";
 
 const url = "https://petdot-backend.onrender.com";
@@ -5,7 +6,7 @@ const url = "https://petdot-backend.onrender.com";
 class AddressService {
   static async addAddress(data: any) {
     console.log(data);
-    
+
     const request = await axios.post(
       `${url}/address/create`,
       {
@@ -37,6 +38,24 @@ class AddressService {
     });
 
     return request.data;
+  }
+
+  static async getAddressByuser() {
+    const response = await axios.get(`${url}/address/get/user`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    if (response.status !== 200) {
+      triggerSnackbar(
+        "Não foi possível coletar informações de endereço. Tente denovo mais tarde"
+      );
+      return false
+    }
+
+    return response.data;
   }
 
   static async editAddress(uuid: string, data: any) {

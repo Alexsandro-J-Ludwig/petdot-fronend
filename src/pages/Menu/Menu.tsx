@@ -18,8 +18,7 @@ function Menu() {
       </div>
 
       <ShowAnimals/>
-      
-      <Footer/>
+    
     </>
   );
 }

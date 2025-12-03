@@ -4,6 +4,11 @@ import AnimalService from "../../../../services/AnimalService";
 import AdoptionsService from "../../../../services/Adoption";
 import { Card } from "antd";
 import styles from "./Adoption.module.css";
+import {
+  CloseOutlined,
+  FilterOutlined,
+  ScheduleOutlined,
+} from "@ant-design/icons";
 
 const { Meta } = Card;
 
@@ -24,28 +29,12 @@ function Adoption() {
   const [name, setName] = useState("");
   const [images, setImages] = useState("");
   const [ages, setAge] = useState("");
-  const [disponible, setDisponible] = useState("");
   const [vaccines, setVaccines] = useState([]);
   const [species, setSpecies] = useState("");
   const [breed, setBreed] = useState("");
   const [gender, setGender] = useState("");
   const [redemption_date, setRedemption_date] = useState("");
   const [uuidShelter, setUuidShelter] = useState("");
-
-  const [animal, setAnimal] = useState(
-    [] as {
-      uuid: string;
-      name: string;
-      images: string;
-      age: string;
-      disponible: boolean;
-      vaccines: string[];
-      species: string;
-      breed: string;
-      gender: string;
-      redemption_date: string;
-    }[]
-  );
 
   const [search, setSearch] = useState("");
   const [disponibleFilter, setDisponibleFilter] = useState("");
@@ -56,6 +45,9 @@ function Adoption() {
   const handleClose = () => setOpen(false);
 
   const [loadding, setLoadding] = useState(false);
+  const [loaddingAnimal, setLoadingAnimal] = useState(false);
+
+  const [filter, setFilter] = useState(false);
 
   useEffect(() => {
     handleAnimals().then(() => {
@@ -64,7 +56,7 @@ function Adoption() {
   }, []);
 
   const handleAnimals = async (value = search) => {
-    setLoadding(true)
+    setLoadding(true);
     const response = await AnimalService.getAllAnimals();
 
     if (response.status === 200) {
@@ -85,6 +77,12 @@ function Adoption() {
 
           if (speciesFilter === "cats") {
             return matchSearch && item.data.species === "Gato";
+          }
+          if (speciesFilter === "bird") {
+            return matchSearch && item.data.species === "Pássaro";
+          }
+          if (speciesFilter === "rabbit") {
+            return matchSearch && item.data.species === "Coelho";
           }
 
           if (disponibleFilter === "all") {
@@ -131,12 +129,12 @@ function Adoption() {
       });
 
       setAnimals(lista);
-      setLoadding(false)
+      setLoadding(false);
     }
   };
 
   const getAnimal = async (uuid: string) => {
-    setLoadding(true);
+    setLoadingAnimal(true);
     const response = await AnimalService.getAnimal(uuid);
 
     if (response.data) {
@@ -144,7 +142,6 @@ function Adoption() {
       setName(response.data.data.name);
       setImages(response.data.data.imageURL);
       setAge(age(response.data.data.redemption_date));
-      setDisponible(response.data.data.disponible === true ? "Sim" : "Não");
       setVaccines(response.data.data.vaccines);
       setSpecies(response.data.data.species);
       setBreed(response.data.data.race);
@@ -153,7 +150,7 @@ function Adoption() {
       setUuidShelter(response.data.data.uuid_shelter);
     }
 
-    setLoadding(false);
+    setLoadingAnimal(false);
   };
 
   const age = (date: string) => {
@@ -224,9 +221,18 @@ function Adoption() {
 
   return (
     <>
-      <div className={styles["navbar"]}>
+      <button
+        className={styles["button-filter"]}
+        onClick={() => setFilter(!filter)}
+      >
+        {filter ? <CloseOutlined /> : <FilterOutlined />}
+      </button>
+
+      <div className={`${styles["navbar"]} ${filter ? styles["active"] : ""}`}>
         <select
-          className={styles["select-species"]}
+          className={`${styles["select-species"]} ${
+            filter ? styles["active"] : ""
+          }`}
           onChange={(e) => {
             const value = e.target.value;
             setSpeciesFilter(value);
@@ -236,13 +242,17 @@ function Adoption() {
           <option value="all">Todos</option>
           <option value="dogs">Cachorros</option>
           <option value="cats">Gatos</option>
+          <option value="bird">Passáro</option>
+          <option value="rabbit">Coelho</option>
         </select>
 
         <select
+          className={`${styles["select-disponible"]} ${
+            filter ? styles["active"] : ""
+          }`}
           onChange={(e) => setDisponibleFilter(e.target.value)}
-          className={styles["select-disponible"]}
         >
-          <option value="all">Dispinível</option>
+          <option value="all">Disponível</option>
           <option value="true">Sim</option>
           <option value="false">Não</option>
         </select>
@@ -250,11 +260,10 @@ function Adoption() {
         <input
           type="text"
           placeholder="Buscar por nome"
-          className={styles["search"]}
+          className={`${styles["search"]} ${filter ? styles["active"] : ""}`}
           onChange={handleSearchChange}
         />
       </div>
-
       <div className={styles["cardsContainer"]}>
         {!loadding && (
           <>
@@ -269,11 +278,12 @@ function Adoption() {
                 }}
               >
                 <Card
+                  classNames={styles["card"]}
                   hoverable
                   style={
                     item.disponible === "Sim"
-                      ? { width: 270, height: 550 }
-                      : { backgroundColor: "gray", width: 270, height: 550 }
+                      ? { width: 290, height: 535 }
+                      : { backgroundColor: "gray", width: 270, height: 485 }
                   }
                   cover={
                     <img
@@ -284,21 +294,34 @@ function Adoption() {
                       height={330}
                     />
                   }
-                  className={styles["card"]}
                 >
                   <Meta style={{ color: "#5d4037" }} title={item.name} />
 
                   <div className={styles["age-container"]}>
-                    <h3 style={{ color: "#5d4037" }}>Idade:</h3>
+                    <h3
+                      style={{ color: "#5d4037" }}
+                      className={styles["age-title"]}
+                    >
+                      Idade:
+                    </h3>
                     <h3 style={{ color: "#5d4037" }} className={styles["age"]}>
                       {item.age}
                     </h3>
                   </div>
 
                   <div className={styles["disponible-container"]}>
-                    <span style={{ color: "#5d4037" }}>
-                      dispoível: <p>{item.disponible}</p>
-                    </span>
+                    <h3
+                      style={{ color: "#5d4037" }}
+                      className={styles["disponible"]}
+                    >
+                      dispoível:
+                    </h3>
+                    <h3
+                      style={{ color: "#5d4037" }}
+                      className={styles["item-disponible"]}
+                    >
+                      {item.disponible}
+                    </h3>
                   </div>
 
                   {item.disponible === "Sim" && (
@@ -327,7 +350,7 @@ function Adoption() {
 
       <Modal open={open} onClose={handleClose}>
         <div className={styles["modal"]}>
-          {!loadding && (
+          {!loaddingAnimal && (
             <>
               <div className={styles["modalHeader"]}>
                 <h2 className={styles["modalTitle"]}>{name}</h2>
@@ -335,31 +358,36 @@ function Adoption() {
 
               <img className={styles["preview"]} src={images} alt="preview" />
 
-              <div className={styles["grid"]}>
-                <div className={styles["fieldGroup"]}>
-                  <label className={styles["label"]}>Data de nascimento</label>
+              <div className={styles["dateSection"]}>
+                <div className={styles["dateIconContainer"]}>
+                  <ScheduleOutlined className={styles["dateIcon"]} />
+                </div>
+                <div className={styles["dateInfo"]}>
+                  <label className={styles["label"]}>DATA DE NASCIMENTO</label>
                   <p className={styles["value"]}>
                     {redemption_date} - {ages}
                   </p>
                 </div>
+              </div>
 
+              <div className={styles["grid"]}>
                 <div className={styles["fieldGroup"]}>
-                  <label className={styles["label"]}>Especie</label>
+                  <label className={styles["label"]}>ESPECIE</label>
                   <p className={styles["value"]}>{species}</p>
                 </div>
 
                 <div className={styles["fieldGroup"]}>
-                  <label className={styles["label"]}>Raça</label>
+                  <label className={styles["label"]}>RAÇA</label>
                   <p className={styles["value"]}>{breed}</p>
                 </div>
 
                 <div className={styles["fieldGroup"]}>
-                  <label className={styles["label"]}>Genero</label>
+                  <label className={styles["label"]}>GENERO</label>
                   <p className={styles["value"]}>{gender}</p>
                 </div>
 
                 <div className={styles["fieldGroup"]}>
-                  <label className={styles["label"]}>Vacinas</label>
+                  <label className={styles["label"]}>VACINAS</label>
                   <p className={styles["value"]}>{vaccines.join(", ")}</p>
                 </div>
               </div>
@@ -370,9 +398,15 @@ function Adoption() {
             </>
           )}
 
-          {loadding && (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <CircularProgress />
+          {loaddingAnimal && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                padding: "2rem",
+              }}
+            >
+              <CircularProgress sx={{ color: "#5d4037" }} />
             </Box>
           )}
         </div>

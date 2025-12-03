@@ -6,7 +6,7 @@ import EditShelter from "../../components/Shelter/Edit/EditShelter";
 import DeleteShelter from "../../components/Shelter/Delete/DeleteShelter";
 import { Validator } from "../../services/Users/Validate";
 import UserService from "../../services/Users/UserServices";
-import { Box, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import StepperShelter from "@/components/Shelter/Add/Stepper/StepperShelter";
 
 interface TabPanelProps {
@@ -24,10 +24,11 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
+      style={{ width: "100%" }}
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ p: 3, height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
           {children}
         </Box>
       )}
@@ -82,7 +83,7 @@ function Shelter() {
           variant="scrollable"
           value={value}
           onChange={handleChange}
-          sx={{ borderRight: 1, borderColor: "black", marginTop: 7, width: "200px", height: "100%"}}
+          sx={{ borderRight: 1, borderColor: "black", marginTop: 7, width: "200px", height: "100%" }}
         >
           <Tab label="Adicionar Abrigo" {...a11yProps(0)} />
           <Tab label="Editar Abrigo" {...a11yProps(1)} />
@@ -90,7 +91,7 @@ function Shelter() {
         </Tabs>
 
         <TabPanel value={value} index={0}>
-          <StepperShelter s={0}/>
+          <StepperShelter s={0} />
         </TabPanel>
 
         {admin == true && (

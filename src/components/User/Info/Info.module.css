@@ -10,7 +10,7 @@
 
 .card {
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -27,6 +27,27 @@
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #eaeaea;
+}
+
+.sectionTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #5d4037;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.fullWidth {
+    grid-column: 1 / -1;
 }
 
 .inputGroup {
@@ -47,14 +68,8 @@
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 0.8rem 1rem;
-    transition: all 0.2s;
-    background: white;
-}
-
-.inputWrapper:focus-within {
-    border-color: #d32f2f;
-    /* Red for delete action warning */
-    box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.1);
+    background: #f9f9f9;
+    /* Slightly different to indicate read-only */
 }
 
 .icon {
@@ -70,40 +85,4 @@
     font-size: 1rem;
     color: #333;
     background: transparent;
-}
-
-.select {
-    appearance: none;
-    cursor: pointer;
-}
-
-.button {
-    margin-top: 1rem;
-    background-color: #d32f2f;
-    /* Red for delete */
-    color: white;
-    border: none;
-    padding: 0.8rem 2rem;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-}
-
-.button:hover {
-    background-color: #b71c1c;
-}
-
-.warningText {
-    color: #666;
-    font-size: 0.9rem;
-    background-color: #fff4f4;
-    padding: 1rem;
-    border-radius: 6px;
-    border: 1px solid #ffcdd2;
 }

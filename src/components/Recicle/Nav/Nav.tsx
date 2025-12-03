@@ -3,6 +3,7 @@ import Hamburger from "hamburger-react";
 import { useState, useRef } from "react";
 import styles from "./Nav.module.css";
 import UserService from "../../../services/Users/UserServices";
+import pata from "../../../assets/icons/pata.png";
 
 function Nav() {
   const [isOpen, setOpen] = useState(false);
@@ -16,7 +17,7 @@ function Nav() {
       localStorage.removeItem("token");
       window.location.href = "/";
     } else {
-      setAdmin(true)
+      setAdmin(true);
     }
   };
 
@@ -24,6 +25,7 @@ function Nav() {
     <div className={styles["container-nav"]}>
       <div ref={anchorRef} className={styles["hamburger"]}>
         <Hamburger
+          size={40}
           toggled={isOpen}
           onToggle={(toggled) => {
             requestAPI();
@@ -40,10 +42,10 @@ function Nav() {
         <MenuItem
           onClick={() => {
             setOpen(false);
-            window.location.href = "/profile";
+            window.location.href = "/user";
           }}
         >
-          Profile
+          Perfil
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -66,7 +68,13 @@ function Nav() {
         )}
       </Menu>
 
-      <h1 className={styles["titulo"]}><a href="/menu">PetDot</a></h1>
+      <div className={styles["titulo-container"]}>
+        <a href="/menu" className={styles["link"]}>
+          <h1 className={styles["titulo"]}>PetDot</h1>
+
+          <img className={styles["pata"]} src={pata} />
+        </a>
+      </div>
     </div>
   );
 }

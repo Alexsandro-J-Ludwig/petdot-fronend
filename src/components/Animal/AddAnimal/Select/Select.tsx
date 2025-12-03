@@ -14,28 +14,28 @@ function Select({ species, vacines, setVacines }: Props) {
   };
 
   const cachorro = [
-    { id: "v8_v10", nome: "V8 / V10" },
-    { id: "antirrabica", nome: "Antirrábica" },
-    { id: "giardia", nome: "Giárdia" },
-    { id: "tosse_dos_canis", nome: "Tosse dos Canis (Bordetella)" },
-    { id: "leishmaniose", nome: "Leishmaniose" },
+    { id: "V8 / V10", nome: "V8 / V10" },
+    { id: "Antirrábica", nome: "Antirrábica" },
+    { id: "Giárdia", nome: "Giárdia" },
+    { id: "Bordetella", nome: "Tosse dos Canis (Bordetella)" },
+    { id: "Leishmaniose", nome: "Leishmaniose" },
   ];
 
   const gato = [
-    { id: "v3_v4_v5", nome: "V3 / V4 / V5" },
-    { id: "antirrabica", nome: "Antirrábica" },
-    { id: "felv", nome: "FeLV (Leucemia Felina)" },
+    { id: "v3 / v4 / v5", nome: "V3 / V4 / V5" },
+    { id: "Raiva", nome: "Antirrábica" },
+    { id: "Leucemia Felina", nome: "FeLV (Leucemia Felina)" },
   ];
 
   const passaro = [
-    { id: "bouba", nome: "Bouba Aviária" },
-    { id: "newcastle", nome: "Doença de Newcastle" },
-    { id: "gumboro", nome: "Gumboro" },
+    { id: "Bouba", nome: "Bouba Aviária" },
+    { id: "Newcastle", nome: "Doença de Newcastle" },
+    { id: "Gumboro", nome: "Gumboro" },
   ];
 
   const coelho = [
     { id: "mixomatose", nome: "Mixomatose" },
-    { id: "rhd", nome: "VHD / RHD (Doença Hemorrágica Viral)" },
+    { id: "VHD/ RHD", nome: "VHD / RHD (Doença Hemorrágica Viral)" },
   ];
 
   return (

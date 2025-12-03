@@ -42,66 +42,68 @@ function AddShelter({ setStepper }: Props) {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Dados Básicos</h1>
+      <div className={styles.card}>
+        <h1 className={styles.title}>Dados Básicos</h1>
 
-      <div className={styles.form}>
-        <div className={styles.inputGroup}>
-          <label className={styles.label}>Nome Fantasia</label>
-          <div className={styles.inputWrapper}>
-            <ShopOutlined className={styles.icon} />
-            <input
-              placeholder="Ex: Abrigo Esperança"
-              value={name}
-              className={styles.field}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className={styles.inputGroup}>
-          <label className={styles.label}>CNPJ</label>
-          <div className={styles.inputWrapper}>
-            <FileTextOutlined className={styles.icon} />
-            <input
-              placeholder="00.000.000/0001-00"
-              className={styles.field}
-              value={cnpj}
-              onChange={(e) => setCnpj(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className={styles.row}>
+        <div className={styles.form}>
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Celular</label>
+            <label className={styles.label}>Nome Fantasia</label>
             <div className={styles.inputWrapper}>
-              <PhoneOutlined className={styles.icon} />
+              <ShopOutlined className={styles.icon} />
               <input
-                placeholder="(00) 00000-0000"
+                placeholder="Ex: Abrigo Esperança"
+                value={name}
                 className={styles.field}
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
           </div>
 
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Email</label>
+            <label className={styles.label}>CNPJ</label>
             <div className={styles.inputWrapper}>
-              <MailOutlined className={styles.icon} />
+              <FileTextOutlined className={styles.icon} />
               <input
-                placeholder="contato@abrigo.com"
+                placeholder="00.000.000/0001-00"
                 className={styles.field}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={cnpj}
+                onChange={(e) => setCnpj(e.target.value)}
               />
             </div>
           </div>
-        </div>
 
-        <button className={styles.button} onClick={handleAddress}>
-          Próximo <ArrowRightOutlined />
-        </button>
+          <div className={styles.row}>
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Celular</label>
+              <div className={styles.inputWrapper}>
+                <PhoneOutlined className={styles.icon} />
+                <input
+                  placeholder="(00) 00000-0000"
+                  className={styles.field}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Email</label>
+              <div className={styles.inputWrapper}>
+                <MailOutlined className={styles.icon} />
+                <input
+                  placeholder="contato@abrigo.com"
+                  className={styles.field}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <button className={styles.button} onClick={handleAddress}>
+            Próximo <ArrowRightOutlined />
+          </button>
+        </div>
       </div>
     </div>
   );

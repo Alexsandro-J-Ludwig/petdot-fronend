@@ -1,3 +1,4 @@
+import { triggerSnackbar } from "@/components/Recicle/Error/Error";
 import axios from "axios";
 
 const url = "https://petdot-backend.onrender.com";
@@ -61,6 +62,24 @@ class UserService {
     return request.status;
   }
 
+  static async getInfo() {
+    const request = await axios.get(`${url}/user`, {
+      headers: {
+        "Content-Type": "applciation/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    if (request.status !== 200) {
+      triggerSnackbar(
+        "Não foi possível pegar informações e usuário. Tente novamente mais tarde "
+      );
+      return false;
+    }
+
+    return request.data;
+  }
+
   static async updateUser(data: any) {
     const request = await axios.put(
       `${url}/user/update`,
@@ -78,7 +97,7 @@ class UserService {
         },
       }
     );
-    
+
     if (request.data.data != "") {
       localStorage.removeItem("token");
       localStorage.setItem("token", `Bearer ${request.data.data.token}`);
@@ -94,7 +113,7 @@ class UserService {
         Authorization: localStorage.getItem("token"),
       },
     });
-    
+
     return request;
   }
 }

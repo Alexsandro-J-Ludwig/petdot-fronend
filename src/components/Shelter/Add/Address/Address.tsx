@@ -57,129 +57,131 @@ function Address({ setStepper }: Props) {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Endereço</h1>
+      <div className={styles.card}>
+        <h1 className={styles.title}>Endereço</h1>
 
-      <div className={styles.form}>
-        <div className={styles.inputGroup}>
-          <label className={styles.label}>Logradouro</label>
-          <div className={styles.inputWrapper}>
-            <EnvironmentOutlined className={styles.icon} />
-            <input
-              placeholder="Rua, Avenida, etc."
-              className={styles.field}
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              required
-            />
-          </div>
-        </div>
-
-        <div className={styles.row}>
-          <div className={styles.inputGroup} style={{ flex: 1 }}>
-            <label className={styles.label}>Número</label>
+        <div className={styles.form}>
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Logradouro</label>
             <div className={styles.inputWrapper}>
+              <EnvironmentOutlined className={styles.icon} />
               <input
-                placeholder="Nº"
+                placeholder="Rua, Avenida, etc."
                 className={styles.field}
-                value={number}
-                onChange={(e) => setNumber(e.target.value)}
-                disabled={number === "S/N"}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
               />
-              <label className={styles.checkboxLabel}>
+            </div>
+          </div>
+
+          <div className={styles.row}>
+            <div className={styles.inputGroup} style={{ flex: 1 }}>
+              <label className={styles.label}>Número</label>
+              <div className={styles.inputWrapper}>
                 <input
-                  type="checkbox"
-                  checked={number === "S/N"}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setNumber("S/N");
-                    } else {
-                      setNumber("");
-                    }
-                  }}
+                  placeholder="Nº"
+                  className={styles.field}
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
+                  disabled={number === "S/N"}
                 />
-                S/N
-              </label>
+                <label className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    checked={number === "S/N"}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setNumber("S/N");
+                      } else {
+                        setNumber("");
+                      }
+                    }}
+                  />
+                  S/N
+                </label>
+              </div>
+            </div>
+
+            <div className={styles.inputGroup} style={{ flex: 2 }}>
+              <label className={styles.label}>Complemento</label>
+              <div className={styles.inputWrapper}>
+                <input
+                  placeholder="Apto, Bloco, etc."
+                  className={styles.field}
+                  value={complement}
+                  onChange={(e) => setComplement(e.target.value)}
+                />
+              </div>
             </div>
           </div>
 
-          <div className={styles.inputGroup} style={{ flex: 2 }}>
-            <label className={styles.label}>Complemento</label>
-            <div className={styles.inputWrapper}>
-              <input
-                placeholder="Apto, Bloco, etc."
-                className={styles.field}
-                value={complement}
-                onChange={(e) => setComplement(e.target.value)}
-              />
+          <div className={styles.row}>
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Bairro</label>
+              <div className={styles.inputWrapper}>
+                <input
+                  placeholder="Bairro"
+                  className={styles.field}
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Cidade</label>
+              <div className={styles.inputWrapper}>
+                <input
+                  placeholder="Cidade"
+                  className={styles.field}
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  required
+                />
+              </div>
             </div>
           </div>
+
+          <div className={styles.row}>
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>Estado</label>
+              <Select setStates={setState} />
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label className={styles.label}>CEP</label>
+              <div className={styles.inputWrapper}>
+                <input
+                  placeholder="00000-000"
+                  className={styles.field}
+                  value={cep}
+                  onChange={(e) => {
+                    if (e.target.value.length > 5 && e.target.value[5] !== "-") {
+                      e.target.value =
+                        e.target.value.slice(0, 5) +
+                        "-" +
+                        e.target.value.slice(5, 8);
+                    }
+                    setCep(e.target.value);
+                  }}
+                  required
+                  maxLength={9}
+                />
+              </div>
+            </div>
+          </div>
+
+          <button
+            className={styles.button}
+            onClick={() => {
+              validation();
+            }}
+          >
+            Próximo <ArrowRightOutlined />
+          </button>
         </div>
-
-        <div className={styles.row}>
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Bairro</label>
-            <div className={styles.inputWrapper}>
-              <input
-                placeholder="Bairro"
-                className={styles.field}
-                value={district}
-                onChange={(e) => setDistrict(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Cidade</label>
-            <div className={styles.inputWrapper}>
-              <input
-                placeholder="Cidade"
-                className={styles.field}
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.row}>
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>Estado</label>
-            <Select setStates={setState} />
-          </div>
-
-          <div className={styles.inputGroup}>
-            <label className={styles.label}>CEP</label>
-            <div className={styles.inputWrapper}>
-              <input
-                placeholder="00000-000"
-                className={styles.field}
-                value={cep}
-                onChange={(e) => {
-                  if (e.target.value.length > 5 && e.target.value[5] !== "-") {
-                    e.target.value =
-                      e.target.value.slice(0, 5) +
-                      "-" +
-                      e.target.value.slice(5, 8);
-                  }
-                  setCep(e.target.value);
-                }}
-                required
-                maxLength={9}
-              />
-            </div>
-          </div>
-        </div>
-
-        <button
-          className={styles.button}
-          onClick={() => {
-            validation();
-          }}
-        >
-          Próximo <ArrowRightOutlined />
-        </button>
       </div>
     </div>
   );
