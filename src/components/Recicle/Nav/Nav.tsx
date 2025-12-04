@@ -5,6 +5,7 @@ import styles from "./Nav.module.css";
 import UserService from "../../../services/Users/UserServices";
 import pata from "../../../assets/icons/pata.png";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Nav() {
   const [isOpen, setOpen] = useState(false);
@@ -44,7 +45,7 @@ function Nav() {
         <MenuItem
           onClick={() => {
             setOpen(false);
-            window.location.href = "/user";
+            navigate("/user");
           }}
         >
           Perfil
@@ -52,7 +53,7 @@ function Nav() {
         <MenuItem
           onClick={() => {
             setOpen(false);
-            window.location.href = "/shelter";
+            navigate("/shelter");
           }}
         >
           Área Abrigo
@@ -62,7 +63,7 @@ function Nav() {
           <MenuItem
             onClick={() => {
               setOpen(false);
-              window.location.href = "/animal";
+               navigate("/animal");
             }}
           >
             Animal
@@ -71,11 +72,11 @@ function Nav() {
       </Menu>
 
       <div className={styles["titulo-container"]}>
-        <a href="/menu" className={styles["link"]}>
+        <Link to="/menu" className={styles["link"]}>
           <h1 className={styles["titulo"]}>PetDot</h1>
 
           <img className={styles["pata"]} src={pata} />
-        </a>
+        </Link >
       </div>
     </div>
   );
