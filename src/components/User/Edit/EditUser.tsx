@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./EditUSer.module.css";
+import styles from "./EditUser.module.css";
 import Select from "./select/Select";
 import UserService from "@/services/Users/UserServices";
 import AddressService from "@/services/AddressService";
