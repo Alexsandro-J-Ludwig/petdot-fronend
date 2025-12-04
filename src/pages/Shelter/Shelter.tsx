@@ -28,7 +28,15 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3, height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Box
+          sx={{
+            p: 3,
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           {children}
         </Box>
       )}
@@ -59,7 +67,9 @@ function Shelter() {
       const response = await UserService.me();
       const acesso = response.data.acesso;
 
-      if (acesso == 2) {
+      console.log(response.data);
+
+      if (acesso === "2") {
         setAdmin(true);
       }
     };
@@ -83,11 +93,20 @@ function Shelter() {
           variant="scrollable"
           value={value}
           onChange={handleChange}
-          sx={{ borderRight: 1, borderColor: "black", marginTop: 7, width: "200px", height: "100%" }}
+          sx={{
+            borderRight: 1,
+            borderColor: "black",
+            marginTop: 7,
+            width: "200px",
+            height: "100%",
+          }}
         >
           <Tab label="Adicionar Abrigo" {...a11yProps(0)} />
-          <Tab label="Editar Abrigo" {...a11yProps(1)} />
-          <Tab label="Deletar Abrigo" {...a11yProps(2)} />
+
+          {admin && [
+            <Tab key="edit" label="Editar Abrigo" {...a11yProps(1)} />,
+            <Tab key="delete" label="Deletar Abrigo" {...a11yProps(2)} />,
+          ]}
         </Tabs>
 
         <TabPanel value={value} index={0}>

@@ -63,7 +63,7 @@ function Animal() {
     } else {
       const acesso = response.data.acesso;
 
-      if (acesso == 2) {
+      if (acesso === "2") {
         // setAdmin(true); // Admin logic removed or needs to be re-implemented if needed
       }
     }

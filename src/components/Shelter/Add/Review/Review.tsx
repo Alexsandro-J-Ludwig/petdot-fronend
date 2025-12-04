@@ -10,6 +10,7 @@ import { useShelter } from "../Context/ShelterContext";
 import { useAddress } from "../Context/AddressContext";
 import UserService from "@/services/Users/UserServices";
 import ShelterService from "@/services/ShelterService";
+import { triggerSnackbar } from "@/components/Recicle/Error/Error";
 
 type Props = {
   setStepper: React.Dispatch<React.SetStateAction<number>>;
@@ -20,22 +21,6 @@ function Review({ setStepper }: Props) {
   const { address, number, complement, district, city, state, cep } =
     useAddress();
 
-  const handleAddress = async () => {
-    const request = await AddressService.addAddress({
-      address: address,
-      number: number,
-      complement: complement,
-      neighborhood: district,
-      city: city,
-      state: state,
-      cep: cep,
-    });
-
-    if (request == 201) {
-      handleAddShelter();
-    }
-  };
-
   const handleAddShelter = async () => {
     const request = await ShelterService.addShelter({
       name: name,
@@ -43,12 +28,31 @@ function Review({ setStepper }: Props) {
       uuid_address: address,
       phone: phone,
       email: email,
-    });
+    }); 
 
     if (request.status === 201) {
+      handleAddress(request.data.data);
+    } else {
+      triggerSnackbar("Erro ao cadastrar abrigo");
+    }
+  };
+
+  const handleAddress = async (uuid: string) => {
+    const request = await AddressService.addAddressShelter({
+      address: address,
+      number: number,
+      complement: complement,
+      neighborhood: district,
+      city: city,
+      state: state,
+      cep: cep,
+      uuid
+    });
+
+    if (request == 201) {
       alterAccess();
     } else {
-      alert("Erro ao cadastrar abrigo");
+      triggerSnackbar("Erro ao cadastrar endereço");
     }
   };
 
@@ -121,15 +125,13 @@ function Review({ setStepper }: Props) {
           <p className={styles.addressSub}>
             {district} - {city}
           </p>
-          <p className={styles.addressSub}>
-            {state} - BR
-          </p>
+          <p className={styles.addressSub}>{state} - BR</p>
           <span className={styles.cepTag}>CEP {cep}</span>
         </div>
       </div>
 
       <div className={styles.footer}>
-        <button className={styles.confirmButton} onClick={handleAddress}>
+        <button className={styles.confirmButton} onClick={handleAddShelter}>
           Finalizar Cadastro <CheckOutlined />
         </button>
       </div>

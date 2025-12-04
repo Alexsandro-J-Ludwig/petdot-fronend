@@ -28,11 +28,11 @@ function AddShelter({ setStepper }: Props) {
       triggerSnackbar("Por favor, insira um email válido.");
       return;
     }
-    if (phone.length !== 14) {
+    if (phone.length !== 11) {
       triggerSnackbar("Por favor, insira um telefone válido.");
       return;
     }
-    if (cnpj.length !== 15) {
+    if (cnpj.length !== 18) {
       triggerSnackbar("Por favor, insira um CNPJ válido.");
       return;
     }

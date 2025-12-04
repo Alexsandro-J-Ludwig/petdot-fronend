@@ -1,3 +1,4 @@
+import { triggerSnackbar } from "@/components/Recicle/Error/Error";
 import axios from "axios";
 
 const url = "https://petdot-backend.onrender.com";
@@ -24,11 +25,29 @@ class ShelterService {
     return request;
   }
 
+  static async getShelterByUUID(uuid: string) {
+    const request = await axios.get(`${url}/shelter/getByID/${uuid}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    if (request.status !== 200) {
+      triggerSnackbar(
+        "Não foi possível pegar informações de abrigo. Teste novamente mais tarde"
+      );
+      return false;
+    }
+
+    return request.data;
+  }
+
   static async getAllShelter(uuid: string) {
     const request = await axios.get(`${url}/shelter/getUser`, {
       headers: {
         "Content-Type": "application/json",
-        "Authorization": uuid
+        Authorization: uuid,
       },
     });
 

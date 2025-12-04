@@ -5,8 +5,6 @@ const url = "https://petdot-backend.onrender.com";
 
 class AddressService {
   static async addAddress(data: any) {
-    console.log(data);
-
     const request = await axios.post(
       `${url}/address/create`,
       {
@@ -17,6 +15,30 @@ class AddressService {
         city: data.city,
         state: data.state,
         cep: data.cep,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token"),
+        },
+      }
+    );
+
+    return request.status;
+  }
+
+  static async addAddressShelter(data: any) {
+    const request = await axios.post(
+      `${url}/address/create/shelter`,
+      {
+        address: data.address,
+        number: data.number,
+        complement: data.complement,
+        neighborhood: data.neighborhood,
+        city: data.city,
+        state: data.state,
+        cep: data.cep,
+        uuid: data.uuid,
       },
       {
         headers: {

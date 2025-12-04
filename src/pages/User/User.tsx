@@ -5,6 +5,7 @@ import styles from "./User.module.css";
 import { Footer } from "antd/es/layout/layout";
 import Info from "@/components/User/Info/Info";
 import EditUser from "@/components/User/Edit/EditUser";
+import Adoption from "@/components/User/Adoption/Adoption";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -25,7 +26,15 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3, height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <Box
+          sx={{
+            p: 3,
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           {children}
         </Box>
       )}
@@ -86,7 +95,9 @@ function User() {
           <EditUser />
         </TabPanel>
 
-        <TabPanel value={value} index={2}></TabPanel>
+        <TabPanel value={value} index={2}>
+          <Adoption />
+        </TabPanel>
       </Box>
       <Footer />
     </div>

@@ -39,11 +39,11 @@ function Info() {
     setLoadding(true);
     const user = await UserService.getInfo();
     const address = await AddressService.getAddressByuser();
-
-    setName(user.data.user[0]);
-    setEmail(user.data.user[1]);
-    setPhone(user.data.user[2]);
-    setNivel(user.data.user[3] === 1 ? "Normal" : "Administrativo");
+    
+    setName(user.data.user.data.name);
+    setEmail(user.data.user.data.email);
+    setPhone(user.data.user.data.celular);
+    setNivel(user.data.user.data.nivel_acesso === 1 ? "Normal" : "Administrativo");
 
     setAddress(address.data.address);
     setNumber(address.data.number);
