@@ -20,7 +20,11 @@ function Nav() {
       localStorage.removeItem("token");
       navigate("/");
     } else {
-      setAdmin(true);
+      if(response.data.acesso === "2") {
+        setAdmin(true);
+      } else {
+        setAdmin(false);
+      }
     }
   };
 

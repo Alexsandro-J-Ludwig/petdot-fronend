@@ -2,17 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #5d4037;
-  width: 100%;
+  background-color: #e6e6e6;
+  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.205);
+  width: 99%;
   height: 7vh;
-  margin: 0 auto;
-  border-radius: 0 0 1rem 1rem;
+  margin: 10px auto;
+  border-radius: 1rem
 }
 
 .hamburger {
   position: absolute;
-  left: 10px; /* distância do início do nav */
-  margin-top: 40px;
+  left: 20px; /* distância do início do nav */
+  margin-top: 43px;
   margin-left: 8px;
   transform: translateY(-50%);
 }
@@ -27,7 +28,7 @@
 .titulo {
   padding-right: 20px;
   font-size: 50px;
-  color: aliceblue;
+  color: #5d4037;
   margin: 0 auto;
 }
 
@@ -44,8 +45,8 @@
 }
 
 .pata {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   margin: 6px;
   transform: skew(-30deg, 30deg);
 }
