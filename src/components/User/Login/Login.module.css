@@ -1,7 +1,7 @@
 .container-login {
-  background-color: rgb(184, 163, 149);
-  width: 450px;
-  height: 360px;
+  background-color: #e0e0e0;
+  width: 20vw;
+  height: 45vh;
   padding: 40px;
   border-radius: 30px;
   position: absolute;  /* posição absoluta */
@@ -21,21 +21,30 @@
 
 .titulo {
     text-align: center;
-    font-size: 45px;
+    transition: 0.5s;
+    font-size: 40px;
     font-weight: bold;
     margin-bottom: 30px;
     color: #5d4037;
 }
 
+.titulo:hover {
+  box-shadow:  2px 2px 10px rgba(0, 0, 0, 0.062);
+}
+
+.label {
+  margin-bottom: 0;
+}
+
 .field {
-  width: 500px;
+  width: 21vw;
   height: 45px;
   border-radius: 10px;
   display: flex;
-  margin-top: 20px;
+  margin-top: 0;
   text-align: center;
   color: black;
-  box-shadow: 0 4px 8px rgba(93, 64, 55, 0.4);
+  box-shadow: 0 2px 8px rgba(93, 64, 55, 0.4);
   background: #d3d3d3; /* Um bege/marrom muito claro para o fundo */
   border: none;
 }
@@ -50,17 +59,19 @@
   height: 45px;
   font-size: 15px;
   border-radius: 14px;
-  margin-top: 20px;
   background-color: #5d4037;
   color: white;
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(93, 64, 55, 0.4);
   font-weight: bold;
+  transition: 0.5s;
+  margin-top: 40px;
+  margin-bottom: 0;
 }
 
 .button:hover {
-  background-color: #412d27;
+  background-color: #30201c;
 }
 
 

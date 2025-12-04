@@ -222,7 +222,7 @@ function Adoption() {
   return (
     <>
       <button
-        className={styles["button-filter"]}
+        className={filter ? styles["button-filter"] : styles["button-filter-off"]}
         onClick={() => setFilter(!filter)}
       >
         {filter ? <CloseOutlined /> : <FilterOutlined />}

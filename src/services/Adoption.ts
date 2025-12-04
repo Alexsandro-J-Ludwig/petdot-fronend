@@ -1,3 +1,4 @@
+import { triggerSnackbar } from "@/components/Recicle/Error/Error";
 import axios from "axios";
 
 const url = "https://petdot-backend.onrender.com";
@@ -22,6 +23,23 @@ class AdoptionsService {
     );
 
     return response;
+  }
+
+  static async getByUser() {
+    const response = await axios.get(`${url}/adoption/getByUser`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    if (response.status !== 200) {
+      triggerSnackbar(
+        "Não foi possível pegar os dados de adoção. Tente novamente mais tarde"
+      );
+    }
+
+    return response.data
   }
 }
 

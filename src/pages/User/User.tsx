@@ -4,6 +4,7 @@ import { useState } from "react";
 import styles from "./User.module.css";
 import { Footer } from "antd/es/layout/layout";
 import Info from "@/components/User/Info/Info";
+import EditUser from "@/components/User/Edit/EditUser";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -72,14 +73,18 @@ function User() {
         >
           <Tab label="Informações" {...a11yProps(0)} />
           <Tab label="Editar perfil" {...a11yProps(1)} />
-          <Tab label="Deletar conta" {...a11yProps(2)} />
+          <Tab label="Animais adotados" {...a11yProps(2)} />
+          <Tab label="Seus Abrigos" {...a11yProps(3)} />
+          <Tab label="Deletar conta" {...a11yProps(4)} />
         </Tabs>
 
         <TabPanel value={value} index={0}>
           <Info />
         </TabPanel>
 
-        <TabPanel value={value} index={1}></TabPanel>
+        <TabPanel value={value} index={1}>
+          <EditUser />
+        </TabPanel>
 
         <TabPanel value={value} index={2}></TabPanel>
       </Box>

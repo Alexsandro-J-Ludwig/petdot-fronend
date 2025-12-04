@@ -59,24 +59,32 @@ function Login() {
             <>
               <h1 className={styles["titulo"]}>Seja bem-vindo de volta!</h1>
 
-              <input
-                placeholder="Email"
-                className={styles["field"]}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-              />
-              <input
-                placeholder="Senha"
-                type="password"
-                className={styles["field"]}
-                onChange={(e) => {
-                  setPass(e.target.value);
-                }}
-              />
+              <label>
+                <p className={styles["label"]}>Email</p>
+                <input
+                  placeholder="Email"
+                  className={styles["field"]}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+              </label>
+              
+              <label>
+                <p className={styles["label"]}>Senha</p>
+                <input
+                  placeholder="Senha"
+                  type="password"
+                  className={styles["field"]}
+                  onChange={(e) => {
+                    setPass(e.target.value);
+                  }}
+                />
+              </label>
+
               <button
                 className={styles["button"]}
-                onClick={() => {           
+                onClick={() => {
                   handleLogin();
                 }}
               >
