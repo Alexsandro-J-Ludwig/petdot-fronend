@@ -32,8 +32,8 @@ function Adoption() {
 
     try {
       const response = await AdoptionsService.getByUser();
-
-      const items = response.map((item: any) => item.data);
+      const items = response.data.map((item: any) => item);
+      
       const results = await Promise.all(
         items.map(async (item: any) => {
           const animal = await AnimalService.getAnimal(item.uuid_animal);
