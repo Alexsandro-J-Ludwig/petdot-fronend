@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import AddShelter from "../../components/Shelter/Add/Shelter/AddShelter";
 import Nav from "../../components/Recicle/Nav/Nav";
 import Footer from "../../components/Recicle/Footer/Footer";
 import EditShelter from "../../components/Shelter/Edit/EditShelter";
@@ -54,7 +53,7 @@ function a11yProps(index: number) {
 function Shelter() {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 

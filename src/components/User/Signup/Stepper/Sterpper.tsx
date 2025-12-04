@@ -1,10 +1,10 @@
 import { Modal } from "@mui/material";
-import { use, useState } from "react";
+import { useState } from "react";
 import Signup from "../Register/Signup";
 import Address from "../Address/Address";
 import RegisterContent from "../RegisterContent/RegisterContent";
 import styles from "./Stepper.module.css";
-import { UserContext, useUser } from "../Contexts/UserContext,";
+import { UserContext } from "../Contexts/UserContext,";
 import { AddressContext } from "../Contexts/AddressContext";
 import { Steps } from "antd";
 import {

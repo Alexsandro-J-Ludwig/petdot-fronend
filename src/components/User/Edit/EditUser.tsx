@@ -32,6 +32,7 @@ function EditUser() {
   const [cep, setCep] = useState("");
 
   const sendUpdateUser = async () => {
+    setLoadding(true);
     if (name || email || password || phone) {
       const response = await UserService.updateUser({
         name,
@@ -67,6 +68,8 @@ function EditUser() {
         alert("Endereço atualizado com sucesso!");
       }
     }
+
+    setLoadding(false)
   };
 
   const InputField = ({
@@ -86,7 +89,9 @@ function EditUser() {
     type?: string;
     fullWidth?: boolean;
   }) => (
-    <div className={`${styles.inputGroup} ${fullWidth ? styles.fullWidth : ""}`}>
+    <div
+      className={`${styles.inputGroup} ${fullWidth ? styles.fullWidth : ""}`}
+    >
       <label className={styles.label}>{label}</label>
       <div className={styles.inputWrapper}>
         <span className={styles.icon}>{icon}</span>
@@ -198,7 +203,9 @@ function EditUser() {
             <div className={styles.inputGroup}>
               <label className={styles.label}>Estado</label>
               <div className={styles.inputWrapper}>
-                <span className={styles.icon}><EnvironmentOutlined /></span>
+                <span className={styles.icon}>
+                  <EnvironmentOutlined />
+                </span>
                 <Select setStates={setState} />
               </div>
             </div>
