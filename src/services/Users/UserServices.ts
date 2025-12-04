@@ -116,6 +116,17 @@ class UserService {
 
     return request;
   }
+
+  static async deleteAccount() {
+    const response = await axios.delete(`${url}/user/delete`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    return response;
+  }
 }
 
 export default UserService;

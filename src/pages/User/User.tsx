@@ -6,6 +6,7 @@ import { Footer } from "antd/es/layout/layout";
 import Info from "@/components/User/Info/Info";
 import EditUser from "@/components/User/Edit/EditUser";
 import Adoption from "@/components/User/Adoption/Adoption";
+import Delete from "@/components/User/Delete/Delete";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -83,7 +84,6 @@ function User() {
           <Tab label="Informações" {...a11yProps(0)} />
           <Tab label="Editar perfil" {...a11yProps(1)} />
           <Tab label="Animais adotados" {...a11yProps(2)} />
-          <Tab label="Seus Abrigos" {...a11yProps(3)} />
           <Tab label="Deletar conta" {...a11yProps(4)} />
         </Tabs>
 
@@ -97,6 +97,10 @@ function User() {
 
         <TabPanel value={value} index={2}>
           <Adoption />
+        </TabPanel>
+
+        <TabPanel value={value} index={3}>
+          <Delete />
         </TabPanel>
       </Box>
       <Footer />
