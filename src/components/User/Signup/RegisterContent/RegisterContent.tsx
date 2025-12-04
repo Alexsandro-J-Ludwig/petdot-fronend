@@ -8,6 +8,7 @@ import {
   EditOutlined,
   EnvironmentOutlined,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   setStepper: React.Dispatch<React.SetStateAction<number>>;
@@ -17,6 +18,7 @@ function RegisterContent({ setStepper }: Props) {
   const { name, email, password, phone } = useUser();
   const { address, number, complement, district, city, state, cep } =
     useAddress();
+  const navigate = useNavigate()
 
   const handleUser = async () => {
     const response = await UserService.registerUser({
@@ -43,7 +45,7 @@ function RegisterContent({ setStepper }: Props) {
     });
 
     if (request == 201) {
-      window.location.href = "/menu";
+      navigate("/menu");
     }
   };
 

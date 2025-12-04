@@ -4,18 +4,20 @@ import { useState, useRef } from "react";
 import styles from "./Nav.module.css";
 import UserService from "../../../services/Users/UserServices";
 import pata from "../../../assets/icons/pata.png";
+import { useNavigate } from "react-router-dom";
 
 function Nav() {
   const [isOpen, setOpen] = useState(false);
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const [admin, setAdmin] = useState(false);
+  const navigate = useNavigate();
 
   const requestAPI = async () => {
     const response = await UserService.me();
 
     if (response.status !== 200) {
       localStorage.removeItem("token");
-      window.location.href = "/";
+      navigate("/");
     } else {
       setAdmin(true);
     }

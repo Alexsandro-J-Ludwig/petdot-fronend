@@ -5,6 +5,8 @@ import styles from "./Login.module.css";
 import UserService from "../../../services/Users/UserServices";
 import { triggerSnackbar } from "@/components/Recicle/Error/Error";
 
+import { useNavigate } from "react-router-dom";
+
 function Login() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -14,6 +16,8 @@ function Login() {
   const [pass, setPass] = useState("");
 
   const [loadding, setLoadding] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (email === "" || pass === "") {
@@ -35,7 +39,7 @@ function Login() {
     });
 
     if (request == 200) {
-      window.location.href = "/menu";
+      navigate("/menu");
     } else {
       triggerSnackbar("Email ou senha incorretos.");
       setLoadding(false);
@@ -69,7 +73,7 @@ function Login() {
                   }}
                 />
               </label>
-              
+
               <label>
                 <p className={styles["label"]}>Senha</p>
                 <input

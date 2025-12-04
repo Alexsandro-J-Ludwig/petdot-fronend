@@ -7,7 +7,7 @@ import Nav from "../../components/Recicle/Nav/Nav";
 import Footer from "../../components/Recicle/Footer/Footer";
 import { Box, Tab, Tabs } from "@mui/material";
 import styles from "./Animal.module.css";
-
+import { useNavigate } from "react-router-dom";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -27,11 +27,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
       style={{ width: "100%" }}
     >
-      {value === index && (
-        <Box sx={{ p: 3, width: "100%" }}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3, width: "100%" }}>{children}</Box>}
     </div>
   );
 }
@@ -45,6 +41,7 @@ function a11yProps(index: number) {
 
 function Animal() {
   const [value, setValue] = useState(0);
+  const navigate = useNavigate();
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -59,7 +56,7 @@ function Animal() {
 
     if (response.status !== 200) {
       localStorage.removeItem("token");
-      window.location.href = "/";
+      navigate("/")
     } else {
       const acesso = response.data.acesso;
 
@@ -86,7 +83,12 @@ function Animal() {
           variant="scrollable"
           value={value}
           onChange={handleChange}
-          sx={{ borderRight: 1, borderColor: "divider", marginTop: 7, minWidth: "200px" }}
+          sx={{
+            borderRight: 1,
+            borderColor: "divider",
+            marginTop: 7,
+            minWidth: "200px",
+          }}
         >
           <Tab label="Adicionar Animal" {...a11yProps(0)} />
           <Tab label="Editar Animal" {...a11yProps(1)} />
