@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import ShelterService from "../../../services/ShelterService";
 import styles from "./DeleteShelter.module.css";
 import { DeleteOutlined, SearchOutlined, WarningOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import UserService from "@/services/Users/UserServices";
 
 function DeleteShelter() {
   const [uuid, setUuid] = useState("");
+  const navigate = useNavigate()
 
   const [shelters, setShelters] = useState(
     [] as { uuid: string; name: string }[]
@@ -38,8 +41,19 @@ function DeleteShelter() {
       const response = await ShelterService.deleteShelter(uuid);
 
       if (response === 200) {
-        alert("Abrigo deletado");
-        window.location.reload();
+        const uuid = localStorage.getItem("token") || "";
+        const request = await ShelterService.getAllShelter(uuid)
+
+        if(request.data.length === 0) {
+          const response = await UserService.updateUser({ nivel_acesso: 1 });
+          
+          if (response === 200) {
+            localStorage.removeItem("token");
+            navigate("/");
+            return;
+          }
+        }
+        navigate("/menu")
       }
     }
   };

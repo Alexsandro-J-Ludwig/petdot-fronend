@@ -1,4 +1,4 @@
-import { Box, CircularProgress, debounce, Modal } from "@mui/material";
+import { Alert, Box, CircularProgress, debounce, Modal } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import AnimalService from "../../../../services/AnimalService";
 import AdoptionsService from "../../../../services/Adoption";
@@ -9,6 +9,7 @@ import {
   FilterOutlined,
   ScheduleOutlined,
 } from "@ant-design/icons";
+import AlertAdopt from "./Alert/Alert";
 
 const { Meta } = Card;
 
@@ -46,6 +47,7 @@ function Adoption() {
 
   const [loadding, setLoadding] = useState(false);
   const [loaddingAnimal, setLoadingAnimal] = useState(false);
+  const [adopt, setAdopt] = useState(false);
 
   const [filter, setFilter] = useState(false);
 
@@ -189,7 +191,6 @@ function Adoption() {
     });
 
     if (response.status === 201) {
-      alert("Adotou com sucesso!");
       desableAnimal();
     }
   };
@@ -201,7 +202,7 @@ function Adoption() {
 
     if (response.status === 200) {
       setLoadding(false);
-      window.location.reload();
+      setAdopt(true);
     }
   };
 
@@ -214,7 +215,6 @@ function Adoption() {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
-    console.log(search);
 
     debouncedSearch(value);
   };
@@ -222,7 +222,9 @@ function Adoption() {
   return (
     <>
       <button
-        className={filter ? styles["button-filter"] : styles["button-filter-off"]}
+        className={
+          filter ? styles["button-filter"] : styles["button-filter-off"]
+        }
         onClick={() => setFilter(!filter)}
       >
         {filter ? <CloseOutlined /> : <FilterOutlined />}
@@ -352,49 +354,61 @@ function Adoption() {
         <div className={styles["modal"]}>
           {!loaddingAnimal && (
             <>
-              <div className={styles["modalHeader"]}>
-                <h2 className={styles["modalTitle"]}>{name}</h2>
-              </div>
+              {!adopt && (
+                <>
+                  <div className={styles["modalHeader"]}>
+                    <h2 className={styles["modalTitle"]}>{name}</h2>
+                  </div>
 
-              <img className={styles["preview"]} src={images} alt="preview" />
+                  <img
+                    className={styles["preview"]}
+                    src={images}
+                    alt="preview"
+                  />
 
-              <div className={styles["dateSection"]}>
-                <div className={styles["dateIconContainer"]}>
-                  <ScheduleOutlined className={styles["dateIcon"]} />
-                </div>
-                <div className={styles["dateInfo"]}>
-                  <label className={styles["label"]}>DATA DE NASCIMENTO</label>
-                  <p className={styles["value"]}>
-                    {redemption_date} - {ages}
-                  </p>
-                </div>
-              </div>
+                  <div className={styles["dateSection"]}>
+                    <div className={styles["dateIconContainer"]}>
+                      <ScheduleOutlined className={styles["dateIcon"]} />
+                    </div>
+                    <div className={styles["dateInfo"]}>
+                      <label className={styles["label"]}>
+                        DATA DE NASCIMENTO
+                      </label>
+                      <p className={styles["value"]}>
+                        {redemption_date} - {ages}
+                      </p>
+                    </div>
+                  </div>
 
-              <div className={styles["grid"]}>
-                <div className={styles["fieldGroup"]}>
-                  <label className={styles["label"]}>ESPECIE</label>
-                  <p className={styles["value"]}>{species}</p>
-                </div>
+                  <div className={styles["grid"]}>
+                    <div className={styles["fieldGroup"]}>
+                      <label className={styles["label"]}>ESPECIE</label>
+                      <p className={styles["value"]}>{species}</p>
+                    </div>
 
-                <div className={styles["fieldGroup"]}>
-                  <label className={styles["label"]}>RAÇA</label>
-                  <p className={styles["value"]}>{breed}</p>
-                </div>
+                    <div className={styles["fieldGroup"]}>
+                      <label className={styles["label"]}>RAÇA</label>
+                      <p className={styles["value"]}>{breed}</p>
+                    </div>
 
-                <div className={styles["fieldGroup"]}>
-                  <label className={styles["label"]}>GENERO</label>
-                  <p className={styles["value"]}>{gender}</p>
-                </div>
+                    <div className={styles["fieldGroup"]}>
+                      <label className={styles["label"]}>GENERO</label>
+                      <p className={styles["value"]}>{gender}</p>
+                    </div>
 
-                <div className={styles["fieldGroup"]}>
-                  <label className={styles["label"]}>VACINAS</label>
-                  <p className={styles["value"]}>{vaccines.join(", ")}</p>
-                </div>
-              </div>
+                    <div className={styles["fieldGroup"]}>
+                      <label className={styles["label"]}>VACINAS</label>
+                      <p className={styles["value"]}>{vaccines.join(", ")}</p>
+                    </div>
+                  </div>
 
-              <button className={styles["confirmButton"]} onClick={adotar}>
-                Adotar
-              </button>
+                  <button className={styles["confirmButton"]} onClick={adotar}>
+                    Adotar
+                  </button>
+                </>
+              )}
+
+              {adopt && <AlertAdopt uuid_shelter={uuidShelter} />}
             </>
           )}
 

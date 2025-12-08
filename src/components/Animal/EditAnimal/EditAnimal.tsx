@@ -33,14 +33,14 @@ function EditAnimal() {
 
   const getAnimalByShelter = async (value: string) => {
     const response = await AnimalService.getAnimalByShelter(value);
-
+    
     if (response.status === 200) {
       const lista = response.data.map((item: any) => ({
-        uuid: item.uuid,
-        name: item.name,
-        imageURL: item.imageURL,
-        birth: item.redemption_date,
-        disponible: item.disponible,
+        uuid: item.data.uuid,
+        name: item.data.name,
+        imageURL: item.data.imageURL,
+        birth: item.data.redemption_date,
+        disponible: item.data.disponible,
       }));
 
       setAnimals(lista);

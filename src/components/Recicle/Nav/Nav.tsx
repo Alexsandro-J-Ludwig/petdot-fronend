@@ -68,6 +68,15 @@ function Nav() {
             Animal
           </MenuItem>
         )}
+
+        <MenuItem 
+          onClick={() => {
+            localStorage.removeItem("token")
+            navigate("/");
+          }}
+        >
+          Sair
+        </MenuItem>
       </Menu>
 
       <div className={styles["titulo-container"]}>

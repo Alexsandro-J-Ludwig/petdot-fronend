@@ -11,6 +11,7 @@ import { useAddress } from "../Context/AddressContext";
 import UserService from "@/services/Users/UserServices";
 import ShelterService from "@/services/ShelterService";
 import { triggerSnackbar } from "@/components/Recicle/Error/Error";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   setStepper: React.Dispatch<React.SetStateAction<number>>;
@@ -20,6 +21,7 @@ function Review({ setStepper }: Props) {
   const { name, cnpj, phone, email } = useShelter();
   const { address, number, complement, district, city, state, cep } =
     useAddress();
+  const navigate = useNavigate()
 
   const handleAddShelter = async () => {
     const request = await ShelterService.addShelter({
@@ -60,7 +62,7 @@ function Review({ setStepper }: Props) {
     const response = await UserService.updateUser({ nivel_acesso: 2 });
 
     if (response === 200) {
-      window.location.href = "/menu";
+      navigate("/menu");
     } else {
       alert("Erro ao alterar o nível de acesso");
     }

@@ -10,6 +10,7 @@ import {
   UploadOutlined,
   SaveOutlined,
 } from "@ant-design/icons";
+import { triggerSnakeBarSuccess } from "@/components/Recicle/Error/Error";
 
 type Props = {
   uuid: string;
@@ -32,6 +33,7 @@ function AnimalModalEdit({ uuid, name, imageURL, birth, disponible }: Props) {
   const [gender, setgender] = useState("");
   const [vaccines, setVacines] = useState<string[]>([]);
   const [imageURLs, setImageURL] = useState(imageURL);
+  const [disponibles, setdisponible] = useState("");
 
   const getURL = async (f: File) => {
     const extension = f.type;
@@ -62,17 +64,19 @@ function AnimalModalEdit({ uuid, name, imageURL, birth, disponible }: Props) {
 
   const handleUpdate = async () => {
     const response = await AnimalService.editAnimal(uuid, {
-      names,
+      name: names,
       redemption_date: births,
-      species,
+      specie: species,
       race: breed,
       gender,
       vaccines,
-      imageURLs,
+      iamgeURL: imageURLs,
+      disponible: disponibles,
     });
 
     if (response.status === 200) {
-      alert("Animal atualizado com sucesso!");
+      triggerSnakeBarSuccess("Animal atualizado com sucesso!");
+      
       handleClose();
     }
   };
@@ -103,7 +107,11 @@ function AnimalModalEdit({ uuid, name, imageURL, birth, disponible }: Props) {
                 className={styles.imagePreview}
               />
             ) : (
-              <img src={imageURLs} alt="current" className={styles.imagePreview} />
+              <img
+                src={imageURLs}
+                alt="current"
+                className={styles.imagePreview}
+              />
             )}
             <label className={styles.fileInputLabel}>
               <input
@@ -193,7 +201,26 @@ function AnimalModalEdit({ uuid, name, imageURL, birth, disponible }: Props) {
             </div>
           </div>
 
-          <Select species={species} vacines={vaccines} setVacines={setVacines} />
+          <Select
+            species={species}
+            vacines={vaccines}
+            setVacines={setVacines}
+          />
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label}>Disponibilidade</label>
+            <div className={styles.inputWrapper}>
+              <select 
+                className={`${styles.field} ${styles.select}`}
+                onChange={(e) => setdisponible(e.target.value)}
+                value={disponibles.toString()}
+              >
+                <option value="">Selecione</option>
+                <option value="true">Disponível</option>
+                <option value="false">Indisponível</option>
+              </select>
+            </div>
+          </div>
 
           <button className={styles.button} onClick={handleUpdate}>
             Salvar Alterações <SaveOutlined />

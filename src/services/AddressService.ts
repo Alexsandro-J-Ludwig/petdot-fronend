@@ -74,10 +74,21 @@ class AddressService {
       triggerSnackbar(
         "Não foi possível coletar informações de endereço. Tente denovo mais tarde"
       );
-      return false
+      return false;
     }
 
     return response.data;
+  }
+
+  static async getAddressByShelter(uuid: string) {
+    const request = await axios.get(`${url}/address/get/shelter/${uuid}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    });
+
+    return request;
   }
 
   static async editAddress(uuid: string, data: any) {
