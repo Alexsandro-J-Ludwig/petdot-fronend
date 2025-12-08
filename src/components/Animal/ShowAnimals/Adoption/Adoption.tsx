@@ -1,4 +1,4 @@
-import { Alert, Box, CircularProgress, debounce, Modal } from "@mui/material";
+import { Box, CircularProgress, debounce, Modal } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import AnimalService from "../../../../services/AnimalService";
 import AdoptionsService from "../../../../services/Adoption";
