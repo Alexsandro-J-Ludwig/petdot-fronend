@@ -80,7 +80,7 @@ class AddressService {
     return response.data;
   }
 
-  static async getAddressByShelter(uuid: string) {
+  static async getAddressByShelter(uuid: string) {    
     const request = await axios.get(`${url}/address/get/shelter/${uuid}`, {
       headers: {
         "Content-Type": "application/json",

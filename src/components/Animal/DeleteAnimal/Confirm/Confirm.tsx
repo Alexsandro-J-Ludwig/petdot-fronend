@@ -3,6 +3,7 @@ import { useState } from "react";
 import AnimalService from "../../../../services/AnimalService";
 import styles from "./Confirm.module.css";
 import { DeleteOutlined } from "@ant-design/icons";
+import { triggerSnackbar } from "@/components/Recicle/Error/Error";
 
 type Props = {
   uuid: string;
@@ -28,7 +29,7 @@ function Confirm({ uuid, name, imageURL }: Props) {
         window.location.reload();
       }
     } else {
-      alert("Frase incorreta");
+      triggerSnackbar("Frase incorreta");
     }
   };
 
