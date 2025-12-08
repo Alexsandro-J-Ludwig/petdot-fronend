@@ -1,0 +1,19 @@
+.button {
+  color: #ffffff;
+  transition: 0.3s all;
+  align-items: center;
+  width: 5vw;
+  height: 3vh;
+  background-color: #5d4037;
+  border-radius: 10px;
+  border: 1px solid #5d4037;
+  font-weight: 600;
+  cursor: pointer;
+  margin: auto;
+}
+
+.adopt-button:hover {
+  background-color: #30201c;
+  border: 1px solid #5d4037;
+  cursor: pointer;
+}

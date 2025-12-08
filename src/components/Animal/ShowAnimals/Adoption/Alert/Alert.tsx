@@ -2,6 +2,7 @@ import AddressService from "@/services/AddressService";
 import ShelterService from "@/services/ShelterService";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "./Alert.module.css"
 
 type Props = {
   uuid_shelter: string;
@@ -48,7 +49,7 @@ function AlertAdopt({ uuid_shelter }: Props) {
   return (
     <div>
       <h1>Parabens pela adoção!</h1>
-      <p>Compareça neste endereço para resgatar seu amiguinho até</p>
+      <p>Compareça neste endereço para resgatar seu    até</p>
       <p>{dueDate}</p>
 
       <div>
@@ -58,6 +59,7 @@ function AlertAdopt({ uuid_shelter }: Props) {
       </div>
 
       <button
+        className={styles["button"]}
         onClick={() => {
           window.location.reload();
         }}
