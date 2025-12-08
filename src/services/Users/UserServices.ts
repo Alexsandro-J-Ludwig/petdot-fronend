@@ -100,7 +100,6 @@ class UserService {
 
     if (request.data.data != "") {
       localStorage.removeItem("token");
-      localStorage.setItem("token", `Bearer ${request.data.data.token}`);
     }
 
     return request.status;
